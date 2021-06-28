@@ -1,0 +1,27 @@
+.btn-fodac-1{
+    background-color: #3454A1;
+    border-color:  #3454A1;
+    color: #fff;
+}
+
+.btn-fodac-2 {
+    background-color: #85562A !important;
+    border-color: #85562A !important;
+    color: #fff !important;
+}
+
+.btn-fodac-3{
+    background-color: #8D882D;
+    border-color:  #8D882D;
+    color: #fff;
+}
+
+.btn-fodac-4{
+    background-color: #343434;
+    border-color:  #343434;
+    color: #fff;
+}
+
+.bg-gradient-fodac-1 {
+    background: linear-gradient(87deg, #315ea8 0, #3454a1 100%) !important;
+}
