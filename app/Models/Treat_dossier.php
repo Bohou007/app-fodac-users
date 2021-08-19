@@ -14,9 +14,18 @@ class Treat_dossier extends Model
     protected $fillable = [
         'dossiers_id',
         'user_id',
-        'role'
+        'role',
+        'observation'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
+    public function dossiers()
+    {
+        return $this->belongsTo(Dossiers::class, 'dossiers_id');
+    }
 
 }

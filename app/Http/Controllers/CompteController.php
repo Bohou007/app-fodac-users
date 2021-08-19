@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dossiers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompteController extends Controller
 {
     public function index(Request $request){
+        $dossiers = Dossiers::where('user_id', Auth::user()->id)->get();
+        $dossierSoumis = Dossiers::where('user_id', Auth::user()->id)->where('status', 0)->get()->count();
+        $dossierEnCours = Dossiers::where('user_id', Auth::user()->id)->where('status', 1)->get()->count();
+        $dossierEnAttente = Dossiers::where('user_id', Auth::user()->id)->where('status', 2)->get()->count();
+        $dossierValider = Dossiers::where('user_id', Auth::user()->id)->where('status', 3)->get()->count();
+        $dossierApprouver = Dossiers::where('user_id', Auth::user()->id)->where('approuve', 1)->where('fond_fodac', '!=', '')->get()->count();
         if ($request->is('admin/*')) {
             return view('admin.home');
         }else {
-            return view('users.home');
+            return view('users.home', compact('dossiers', 'dossierSoumis', 'dossierEnCours', 'dossierValider', 'dossierEnAttente', 'dossierApprouver'));
         }
     }
 

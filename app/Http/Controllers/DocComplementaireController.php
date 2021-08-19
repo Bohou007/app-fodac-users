@@ -26,7 +26,7 @@ class DocComplementaireController extends Controller
      */
     public function create()
     {
-        $dossiers = Dossiers::where('user_id', Auth::user()->id)->get();
+        $dossiers = Dossiers::where('user_id', Auth::user()->id)->where('status', '!=' , 3)->where('status', '!=', 4)->get();
         return view('users.doc.createComplement', compact('dossiers'));
     }
 
@@ -55,10 +55,14 @@ class DocComplementaireController extends Controller
                 $pj = new PieceJointe();
                 $pj->name_doc = $request->doc_name;
                 $pj->type_doc = "Complement";
-                $pj->path_doc = $path_doc;
+                $pj->path_doc = $docprojet_fileName;
                 $pj->user_id =Auth::user()->id;
                 $pj->save();
-                $pj->dossiers()->attach($request->dossier_id);
+
+                $dossier = Dossiers::findOrFail($request->dossier_id);
+                $dossier->pieceJointe()->attach($pj->id);
+
+                flashy()->success('Votre document complementaire a été enregistrer avec success.');
 
                 return redirect()->route('documents-administrative.index');
         }

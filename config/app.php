@@ -167,6 +167,7 @@ return [
          */
         Spatie\Permission\PermissionServiceProvider::class,
         'Laracasts\Flash\FlashServiceProvider',
+        MercurySeries\Flashy\FlashyServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -228,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Flash' => 'Laracasts\Flash\Flash',
+        'Flashy' => MercurySeries\Flashy\Flashy::class,
 
 
     ],

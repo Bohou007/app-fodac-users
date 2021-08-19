@@ -126,7 +126,8 @@ class ProfileController extends Controller
 
         $user->save();
 
-        flash('Votre profile a été mis à jour avec succès!')->success()->important();
+        flashy()->success('Votre profile a été mis à jour avec succès!');
+
         return back();
     }
 

@@ -47,12 +47,12 @@
                             <span class="nav-link-text">Documents Administratives</span>
                         </a>
                     </li>
-                      <li class="nav-item">
+                      {{-- <li class="nav-item">
                           <a class="nav-link {{ set_active_route('notification.index') }}" href="{{ route('notification.index') }}">
                               <i class="ni ni-bell-55 text-pink"></i>
                               <span class="nav-link-text">Notifications</span>
                           </a>
-                      </li>
+                      </li> --}}
                       <li class="nav-item">
                           <a class="nav-link {{ set_active_route('supports') }}" href="{{ route('supports') }}">
                               <i class="ni ni-support-16 text-default"></i>

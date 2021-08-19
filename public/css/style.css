@@ -22,6 +22,17 @@
     color: #fff;
 }
 
+.nav-tabs.nav-justified > li > a {
+    border-bottom: 1px solid #fff !important;
+    border-radius: 4px 4px 0 0;
+    color: #fff !important;
+}
+
+.block > .nav-tabs {
+    background-color: #fff !important;
+    border-bottom: none;
+}
+
 
 .bg-image{
     max-width : 100%;

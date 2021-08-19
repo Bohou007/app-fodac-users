@@ -60,18 +60,48 @@ $(function () {
             };
             alert('Bonjour comment tu vas');
             console.log(postForm);
+
+            console.log($("formDemande").serialize());
             $.ajax({
-                url: $("#myForm").attr("action"),
+                url: $("formDemande").attr("action"),
                 type: 'POST',
-                data: $("#myForm").serialize(),
+                // data: {"data": formData, "doc_file":doc_file, "_token": "{{ csrf_token() }}"},
+                data: $("formDemande").serialize(),
                 success: function (data, status) {
-                    console.log("I set this in the constructor -- all finished");
+                    swal({
+                        title: "Félicitations!",
+                        text: 'Le dossier de votre projet a bien été enregistrer. Nous vous recontacterons.',
+                        type: 'success',
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "Okay",
+                    }).then(function (isConfirm) {
+                        if (isConfirm) {
+                            window.location.replace("consultation-dossier");
+                            return false;
+                        }
+                    });
+
                 },
                 error: function (xhr, desc, err) {
 
-                    console.log("error");
+                    swal({
+                        title: "Erreur !",
+                        text: 'Merci de ressayer plustard.',
+                        type: 'danger',
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "Okay",
+                    }).then(function (isConfirm) {
+                        if (isConfirm) {
+                            return desc;
+                        }
+                    });
                 }
             });
+
+            // Submit form input
+            // form.submit();
 
             // Submit form input
             // form.submit();

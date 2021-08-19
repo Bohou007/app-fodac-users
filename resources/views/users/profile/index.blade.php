@@ -11,7 +11,7 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
                             <a href="#">
-                                <img src="../../assets/img/theme/team-4.jpg" class="rounded-circle">
+                                <img src="{{ asset('images/icon-user-man.png') }}" class="rounded-circle">
                             </a>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0 text-white">Dossier deposé</h5>
-                                    <span class="h2 font-weight-bold mb-0 text-white">350,897</span>
+                                    <span class="h2 font-weight-bold mb-0 text-white">{{ count(Auth::user()->dossiers->where('status', 0)) }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0 text-white">Dossier validé</h5>
-                                    <span class="h2 font-weight-bold mb-0 text-white">49,65%</span>
+                                    <span class="h2 font-weight-bold mb-0 text-white">{{ count(Auth::user()->dossiers->where('status', 3)) }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-white text-dark rounded-circle shadow">

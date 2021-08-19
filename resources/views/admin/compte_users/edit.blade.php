@@ -1,0 +1,1 @@
+@dump($user, $roles, $permissions)

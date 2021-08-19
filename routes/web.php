@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // Route::group([
@@ -31,13 +31,15 @@ Route::group([
 function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/notifications', 'NotificationController@index')->name('notification.index');
-    Route::get('/dashboard/supports', 'PagesController@supports')->name('supports');
-    Route::post('/dashboard/supports', 'PagesController@supportStore')->name('supports.store');
+
     // ROUTE USERS
     Route::group(['prefix' => 'users', 'middleware' => 'App\Http\Middleware\Authuser'], function () {
         // DASBOARD
         Route::group(['prefix' => 'dashboard'], function () {
-
+            Route::get('/dashboard/supports', 'PagesController@supports')->name('supports');
+            Route::get('/dashboard/supports/new-message', 'PagesController@supportCreate')->name('supports.create');
+            Route::post('/dashboard/supports', 'PagesController@supportStore')->name('supports.store');
+            Route::delete('/dashboard/supports/suppression/{id}', 'PagesController@supportDelete')->name('supports.delete');
             //Dossiers User
             Route::get('/consultation-dossier', 'DossiersUsController@index')->name('dossiers.index');
             Route::get('/demande-soutien', 'DossiersUsController@create')->name('dossiers.create');
@@ -53,21 +55,24 @@ function () {
         });
     });
 
-    // ROUTE ADMIN
-    Route::group(['prefix' => 'admin', 'middleware' => 'App\Http\Middleware\Authadmin'], function () {
+    // ROUTE ADMIN 'middleware' => 'App\Http\Middleware\Authadmin'
+    Route::group(['prefix' => 'admin/dashboard'], function () {
         // UTILISATEURS
         Route::group(['prefix' => 'compte'], function() {
             /* Admin register */
-                Route::get('/inscription', 'UserController@create')->name('admin.register')->middleware(['permission:ajouter_users']);
-                Route::post('/inscrire', 'UserController@store')->name('admin.registered')->middleware(['permission:ajouter_users']);
+                Route::get('/inscription', 'UserController@create')->name('admin.register');
+                Route::post('/inscrire', 'UserController@store')->name('admin.registered');
+                Route::get('/inscription/{token}/activation', 'Auth\VerificationController@activate')->name('admin.activate');
+                Route::get('/activation/{token}/refresh', 'Auth\VerificationController@refreshActivationLink')->name('admin.refresh.activation');
+
             /* Admin register */
 
             /* Utilisateurs */
                 // Route::get('users', 'UserController@entete')->name('users.entete')->middleware(['permission:voir_users']);
 
-                Route::get('', 'UserController@index')->name('compte.users.index');
+                Route::get('/', 'UserController@index')->name('compte.users.index');
                 Route::get('/utilisateur/{token}', 'UserController@show')->name('compte.users.show')->middleware(['permission:voir utilisateur']);
-                Route::get('/utilisateur/{token}/edit', 'UserController@edit')->name('compte.users.edit')->middleware(['permission:modifier utilisateur']);
+                Route::get('/utilisateur/{token}/edit', 'UserController@edit')->name('compte.users.edit');
                 Route::post('/utilisateur/{user}/update', 'UserController@update')->name('compte.users.update')->middleware(['permission:modifier utilisateur']);
                 Route::get('/utilisateurs/desactives', 'UserController@trasheds')->name('compte.users.trasheds')->middleware(['permission:voir utilisateur']);
                 Route::get('/utilisateur/{token}/supprimer', 'UserController@destroy')->name('compte.users.delete')->middleware(['permission:supprimer utilisateur']);
@@ -86,6 +91,31 @@ function () {
             /* Comptes Admin */
         });
         // GESTION DES ROLES
+
+        Route::group(['prefix' => 'dossiers'], function() {
+            /* Comptes Admin */
+                Route::get('/', 'DossiersController@index')->name('admin.allDossiers');
+                Route::get('/traite-dossier/{id}', 'DossiersController@traiteDossierUpdate')->name('admin.traiteDossieerUpdate');
+                Route::get('/show-dossier/{dossier_id}', 'DossiersController@dossierShow')->name('admin.DossierShow');
+
+                Route::get('/add-complement-doc/{dossier_id}', 'DossiersController@addComplementDoc')->name('admin.addComplementDoc');
+                Route::post('/add-complement-doc', 'DossiersController@addComplementDocStore')->name('admin.addComplementDoc.store');
+
+
+                Route::post('/observation', 'ObservationController@store')->name('admin.observations.store');
+                Route::put('/observation/{id}', 'ObservationController@update')->name('admin.observations.update');
+
+                Route::get('/assigned-fond', 'FondDossierController@index')->name('assigned-fond.index');
+                Route::get('/assigned-fond/approve/{id}', 'FondDossierController@show')->name('assigned-fond.show');
+
+
+                Route::get('/traite-dossier/test/{id}', 'DossiersController@traiteDossierShow')->name('admin.traiteDossieerShow');
+                Route::get('/compte/profil', 'CompteController@show')->name('admin.profile');
+                Route::post('/compte/{id}/modifier-profil', 'CompteController@profileUpdate')->name('admin.profile.update');
+                Route::post('/compte/modifier-mot-passe', 'CompteController@passwordUpdate')->name('admin.password.update');
+                Route::get('/deconnexion', 'CompteController@logout')->name('admin.logout');
+            /* Comptes Admin */
+        });
 
         Route::group(['prefix' => 'roles'], function() {
             /* Roles */

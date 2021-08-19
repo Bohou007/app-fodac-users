@@ -12,6 +12,11 @@ class User extends Authenticatable
     use HasRoles;
     use Notifiable;
 
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+    const DELETE = 1;
+    const NODELETE = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,33 +40,47 @@ class User extends Authenticatable
 
     public function piece_jointes()
     {
-        return $this->belongsTo(PieceJointe::class, 'user_id');
+        return $this->hasMany(PieceJointe::class, 'user_id');
+    }
+
+    public function taches()
+    {
+        return $this->hasMany(Taches::class, 'user_id');
     }
 
     public function supports()
     {
-        return $this->belongsTo(Supports::class, 'user_id');
+        return $this->hasMany(Supports::class, 'user_id');
     }
 
-    public function dossiersTreat()
+    public function treatDossier()
     {
-        return $this->belongsToMany(Dossiers::class, 'Treat_dossier', 'user_id', 'dossiers_id');
+        return $this->hasMany(Treat_dossier::class, 'user_id');
     }
 
-    public function dossiersApprouve()
+    public function approuveDossier()
     {
-        return $this->belongsToMany(Dossiers::class, 'Approuve_dossier', 'user_id', 'dossiers_id');
+        return $this->hasMany(Approuve_dossier::class, 'user_id');
     }
 
-
-    public function dossiersOc()
+    public function observation()
     {
-        return $this->belongsTo(Dossiers::class,'user_id');
+        return $this->hasMany(Observation::class, 'user_id');
+    }
+
+    public function dossiers()
+    {
+        return $this->hasMany(Dossiers::class,'user_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notifications::class,'user_id');
     }
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var arrayuser_id
+     * @var array
      */
     protected $hidden = [
         'password', 'remember_token',

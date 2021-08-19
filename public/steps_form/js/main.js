@@ -43,63 +43,8 @@ $(function () {
                 accepts: {'enctype': "multipart/form-data"}
             })
 
-            var form = $("#myForm").val();
+            document.getElementById("formDemande").submit();
 
-            //     $("#myForm").serialize(),
-            //     doc_file
-            // ];
-            var formDataob = {
-                name_project : $("input[name='name_project']").val(),
-                description_project : $("input[name='description_project']").val(),
-                budget_oc : $("input[name='budget_oc']").val(),
-                capitale_oc : $("input[name='capitale_oc']").val(),
-                capitale_demander : $("input[name='capitale_demander']").val(),
-                doc_name : $("input[name='doc_name']").val(),
-              };
-            var doc_file = $('#doc_file').prop('files');
-
-            var formData = JSON.stringify(formDataob);
-            console.log($("#myForm").serialize());
-            $.ajax({
-                url: $("#myForm").attr("action"),
-                type: 'POST',
-                // data: {"data": formData, "doc_file":doc_file, "_token": "{{ csrf_token() }}"},
-                data: $("#myForm").serialize(),
-                success: function (data, status) {
-                    swal({
-                        title: "Félicitations!",
-                        text: 'Le dossier de votre projet a bien été enregistrer. Nous vous recontacterons.',
-                        type: 'success',
-                        showCancelButton: false,
-                        showConfirmButton: true,
-                        confirmButtonText: "Okay",
-                    }).then(function (isConfirm) {
-                        if (isConfirm) {
-                            window.location.replace("consultation-dossier");
-                            return false;
-                        }
-                    });
-
-                },
-                error: function (xhr, desc, err) {
-
-                    swal({
-                        title: "Erreur !",
-                        text: 'Merci de ressayer plustard.',
-                        type: 'danger',
-                        showCancelButton: false,
-                        showConfirmButton: true,
-                        confirmButtonText: "Okay",
-                    }).then(function (isConfirm) {
-                        if (isConfirm) {
-                            return desc;
-                        }
-                    });
-                }
-            });
-
-            // Submit form input
-            // form.submit();
         },
         labels: {
             finish: "Enregistrer",

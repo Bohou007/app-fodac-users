@@ -13,214 +13,180 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <form action="{{ route('dossiers.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="row col-12">
-
-            <div class="col-xl-6 order-xl-1">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">Information de l'utilisateur </h3>
-                            </div>
+    <div class="">
+        @include('flash::message')
+    </div>
+    <div class="wrapper">
+        <center>
+            <form id="formDemande" action="{{ route('dossiers.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div id="wizard">
+                    <!-- SECTION 1 -->
+                    <h4></h4>
+                    <section>
+                        <div class="form-row">
+                            <label for=""> Nom du projet *</label>
+                            <input required type="text" value="{{ old('name_project') }}" name="name_project"
+                                class="form-control name @error('name_project') is-invalid @enderror"
+                                placeholder="Entrer le nom du projet">
+                            @error('name_project')
+                                <span class="invalid-feedback text-left" role="alert">
+                                    <strong>{!! $message !!}</strong>
+                                </span>
+                            @enderror
                         </div>
-                    </div>
-                    <div class="card-body">
+                        <div class="form-row">
+                            <label for=""> Description du projet</label>
+                            <textarea required placeholder="Decriver le projet en quelques lignes et soyer explicite."
+                                class="form-control description_project @error('description_project') is-invalid @enderror"
+                                value="{{ old('description_project') }}" name="description_project" id="ckeditor"
+                                cols="30" rows="10"></textarea>
+                            @error('description_project')
+                                <span class="invalid-feedback text-left" role="alert">
+                                    <strong>{!! $message !!}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for=""> Nom du projet *</label>
-                                        <input required type="text" value="{{ old('name_project') }}"
-                                            name="name_project"
-                                            class="form-control name @error('doc_name') is-invalid @enderror"
-                                            placeholder="Entrer le nom du projet">
-                                        @error('name_project')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{!! $message !!}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for=""> Budget du projet</label>
-                                        <input required type="text" name="budget_oc"
-                                            class="form-control budget_oc @error('budget_oc') is-invalid @enderror"
-                                            value="{{ old('budget_oc') }}"
-                                            placeholder="Entrez le budget pour la realisation du projet.">
-                                        @error('budget_oc')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{!! $message !!}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for=""> Votre Capitale</label>
-                                        <input required type="text" name="capitale_oc"
-                                            class="form-control  @error('capitale_oc') is-invalid @enderror"
-                                            value="{{ old('capitale_oc') }}"
-                                            placeholder="Quels votre fond pour la realisation du projet.">
-                                        @error('capitale_oc')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{!! $message !!}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for=""> Capitale Demander</label>
-                                        <input required type="text" name="capitale_demander"
-                                            class="form-control @error('capitale_demander') is-invalid @enderror"
-                                            value="{{ old('capitale_demander') }}"
-                                            placeholder="Entrez le montant demander">
-                                        @error('capitale_demander')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{!! $message !!}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="my-4">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                    </section>
 
-                                        <div class="form-group">
-                                            <div class="card-wrapzper">
-                                                <div>
-                                                    @if (!$dossiers->count())
-                                                        <div class="alert alert-fodac alert-dismissible fade show"
-                                                            role="alert">
-                                                            <span class="alert-icon"><i class="ni bell-55"></i></span>
-                                                            <span class="alert-text"><strong>Aucun document
-                                                                    enregister!</strong> Vous n'avez pas
-                                                                de document pre-enregistrer merci de charger vos
-                                                                fichiers</span>
-                                                            <button type="button" class="close" data-dismiss="alert"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                    @else
-                                                        @foreach ($dossiers as $dossier)
-                                                            <div class="form-row">
-                                                                <div class="form-controcl text-left" style="">
-                                                                    <label for="doc-{{ $dossier->id }}">
-                                                                        <input type="checkbox" value="{{ $dossier->id }}"
-                                                                            name="pj_id[]" id="doc-{{ $dossier->id }}"
-                                                                            class="form-controls  @error('pj_id') is-invalid @enderror">
-                                                                        <span class="ml-3" style="color: #303030;">
-                                                                            <i class="fa fa-file-pdf-o mr-3"
-                                                                                style="color: red; font-size: 25px;"></i>
-                                                                            {{ $dossier->name_doc }}
-                                                                        </span>
-                                                                    </label>
-                                                                    @error('pj_id')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{!! $message !!}</strong>
-                                                                        </span>
-                                                                    @enderror
+                    <!-- SECTION 2 -->
+                    <h4></h4>
+                    <section>
+                        <div class="form-row">
+                            <label for=""> Budget du projet</label>
+                            <input required type="text" name="budget_oc"
+                                class="form-control budget_oc @error('budget_oc') is-invalid @enderror"
+                                value="{{ old('budget_oc') }}"
+                                placeholder="Entrez le budget pour la realisation du projet.">
+                            @error('budget_oc')
+                                <span class="invalid-feedback text-left" role="alert">
+                                    <strong>{!! $message !!}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-row">
+                            <label for=""> Votre Capitale</label>
+                            <input required type="text" name="capitale_oc"
+                                class="form-control  @error('capitale_oc') is-invalid @enderror"
+                                value="{{ old('capitale_oc') }}"
+                                placeholder="Quels votre fond pour la realisation du projet.">
+                            @error('capitale_oc')
+                                <span class="invalid-feedback text-left" role="alert">
+                                    <strong>{!! $message !!}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-row">
+                            <label for=""> Capitale Demander</label>
+                            <input required type="text" name="capitale_demander"
+                                class="form-control @error('capitale_demander') is-invalid @enderror"
+                                value="{{ old('capitale_demander') }}" placeholder="Entrez le montant demander">
+                            @error('capitale_demander')
+                                <span class="invalid-feedback text-left" role="alert">
+                                    <strong>{!! $message !!}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3 -->
+                    <h4></h4>
+                    <section>
+                        <div class="card-wrapper">
+                            <div>
+                                @if ($dossiers->count())
+                                    <div class="table-responsive">
+                                        <!-- Projects table -->
+                                        <div class="table-responsive">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col" class="sort" data-sort="name">Nom du document</th>
+                                                        <th scope="col" class="sort" data-sort="status">Sectionner</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list">
+                                                    @foreach ($dossiers as $index => $dossier)
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <div class="media align-items-center">
+                                                                    <a href="#" class="avatar rounded-circle mr-3">
+                                                                        <img alt="Image placeholder"
+                                                                            src="{{ asset('images/pdf-image.png') }}">
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <span
+                                                                            class="name mb-0 text-sm">{{ $dossier->name_doc }}</span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        @endforeach
+                                                            </th>
+                                                            <td class="budget">
+                                                                <input type="checkbox" value="{{ $dossier->id }}"
+                                                                    name="pj_id[{{ $index }}]"
+                                                                    id="doc-{{ $dossier->id }}"
+                                                                    class="form-controls  @error('pj_id') is-invalid @enderror">
+                                                                @error('pj_id')
+                                                                    <span class="invalid-feedback text-left" role="alert">
+                                                                        <strong>{!! $message !!}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
 
-                                                    @endif
-                                                </div>
-                                            </div>
+
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                        <table class="" id="dynamicTable">
-                                            <tr style="line-height: 41px;">
-                                                <th>Nom du document</th>
-                                                <th>Charger le fichier</th>
-                                                <th></th>
-                                            </tr> <br><br>
-                                            <tr>
-                                                <td style="margin-right: 10px;">
-                                                    <input type="text" id="doc_name0" name="doc[0][doc_name]" placeholder="Entrer le nom" class="form-control nom @error('doc[0][doc_name]') is-invalid @enderror" />
-                                                    @error('doc[0][doc_name]')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{!! $message !!}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </td>
-                                                <td style="margin-right: 10px;">
-                                                    <input type="file" id="doc_file0" name="doc[0][doc_file]" class="form-control montant @error('doc[0][doc_file]') is-invalid @enderror" />
-                                                    @error('doc[0][doc_file]')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{!! $message !!}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </td>
-                                                <td><button type="button" name="add" id="add" class="add btn btn-info btn-sm">+Ajouter</button></td>
-                                            </tr>
-                                        </table>
-                                   </div>
-                                </div>
-
-                                </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 order-xl-2">
-                <div class="card">
-                    <!-- Card header -->
-                    <div class="card-header">
-                        <!-- Title -->
-                        <h5 class="h3 mb-0">Profil de compte</h5>
-                    </div>
-                    <!-- Card body -->
-                    <div class="card-body">
-
-                        <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for=""> Description du projet</label>
-                                        <textarea required
-                                            placeholder="Decriver le projet en quelques lignes et soyer explicite."
-                                            class="form-control description_project @error('description_project') is-invalid @enderror"
-                                            value="{{ old('description_project') }}" name="description_project"
-                                            id="ckeditor" cols="30" rows="10"></textarea>
-                                        @error('description_project')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{!! $message !!}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                @endif
+                                <div class="form-row col-lg-12">
+                                    <table class="" id="dynamicTable">
+                                        <tr style="line-height: 41px;">
+                                            <th>Nom du document</th>
+                                            <th>Charger le fichier</th>
+                                            <th></th>
+                                        </tr> <br><br>
+                                        <tr>
+                                            <td style="margin-right: 10px;">
+                                                <input type="text" id="doc_name0" name="doc[0][doc_name]"
+                                                    placeholder="Entrer le nom"
+                                                    class="form-control nom @error('doc[0][doc_name]') is-invalid @enderror" />
+                                                @error('doc[0][doc_name]')
+                                                    <span class="invalid-feedback text-left" role="alert">
+                                                        <strong>{!! $message !!}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
+                                            <td style="margin-right: 10px;">
+                                                <input type="file" id="doc_file0" name="doc[0][doc_file]"
+                                                    class="form-control montant @error('doc[0][doc_file]') is-invalid @enderror" />
+                                                @error('doc[0][doc_file]')
+                                                    <span class="invalid-feedback text-left" role="alert">
+                                                        <strong>{!! $message !!}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
+                                            <td>
+                                                <button type="button" name="add" id="addDoc"
+                                                    class="addDoc btn btn-info btn-sm">
+                                                    +Ajouter
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
+                    {{-- data-toggle="sweet-alert" data-sweet-alert="success" --}}
                 </div>
-            </div>
-            <div class="col-xl-12 order-xl-2">
-                <div class="card">
-                    <div class="card-header">
-                        <center>
-                            <button type="submit" class="btn btn-fodac-2">Enregistrer vos modifications</button>
-                        </center>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
-</div>
+            </form>
+        </center>
+    </div>
 @endsection
 
 
@@ -233,36 +199,7 @@
 
 
     <script src="{{ asset('js/ckeditor.js') }}"></script>
-    <script type="text/javascript" defer>
-        $(document).ready(function() {
-            $('#ckeditor').ckeditor();
 
-            var i = 0;
-            $(".add").click(function() {
-                ++i;
-                $("#dynamicTable").append('<tr>' +
-                    '<td><input type="text" id="addmore_actionnaire' + i + '" name="addmore[' + i +
-                    '][actionnaire]" placeholder="Entrer le nom" class="form-control nom" /></td>' +
-                    '<td><input type="text" id="addmore_montant' + i + '" name="addmore[' + i +
-                    '][montant]" placeholder="Enter le montant" class="form-control montant" /></td>' +
-                    '<td><input type="text" id="addmore_pourcentage' + i + '" name="addmore[' + i +
-                    '][pourcentage]" class="form-control pourcent" value="" readOnly /></td>' +
-                    '<td><button type="button" class="btn btn-danger btn-sm remove-tr">X</button> <button type="button" name="add" id="add" class="add btn btn-info btn-sm">Ajouter</button></td>' +
-                    '</tr>');
-
-
-            });
-
-            // $(this).attr('disabled', true);
-
-            //remove input
-            $('.remove-tr').on('click', function() {
-                $(this).parents('tr').remove();
-                $('#result').val('');
-                $('.add').removeAttr('disabled');
-            });
-        });
-    </script>
     <!-- JQUERY STEP -->
     <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js') }}" defer></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" defer></script>
@@ -275,4 +212,5 @@
     <script src="{{ asset('steps_form/js/jquery.steps.js') }}" defer></script>
 
     <script src="{{ asset('steps_form/js/main.js') }}" defer></script>
+
 @endsection

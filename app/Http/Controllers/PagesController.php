@@ -11,7 +11,21 @@ class PagesController extends Controller
 {
     public function supports()
     {
-        return view('users.supports.index');
+        $supports = Supports::where('user_id', Auth::user()->id)->get();
+        return view('users.supports.index', compact('supports'));
+    }
+
+
+    public function supportCreate()
+    {
+        return view('users.supports.create');
+    }
+
+    public function supportDelete($id)
+    {
+        Supports::destroy($id);
+        flashy()->success('Message a été supprimé avec success.');
+        return back();
     }
 
     /**
@@ -42,7 +56,8 @@ class PagesController extends Controller
 
             // \LogActivity::addToLog('Message envoyé a :: '.$messages->destinataire_user->email);
 
-        flash('Le message a été envoyé avec succès!')->success()->important();
+            flashy()->success('Message envoyé avec success.');
+
 
         return redirect()->route('supports');
     }

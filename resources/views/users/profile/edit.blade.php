@@ -17,7 +17,7 @@
                                     <h3 class="mb-0">Information de l'utilisateur </h3>
                                 </div>
                                 <div class="col-4 text-right">
-                                    <a href="#!" class="btn btn-sm btn-fodac-2">
+                                    <a href="{{ route('profile.index') }}" class="btn btn-sm btn-fodac-1">
                                         <i class="ni ni-single-02"></i>
                                         Mon profile
                                     </a>
@@ -200,7 +200,7 @@
                     <div class="card">
                         <div class="card-header">
                             <center>
-                                <button type="submit" class="btn btn-fodac-2">Enregistrer vos modifications</button>
+                                <button type="submit" class="btn btn-fodac-1">Enregistrer vos modifications</button>
                             </center>
                         </div>
                     </div>

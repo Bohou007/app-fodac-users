@@ -30,15 +30,21 @@
                           </a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link {{ set_active_route('dossiers.index') }}"
-                              href="{{ route('dossiers.index') }}">
+                          <a class="nav-link {{ set_active_route('admin.allDossiers') }}"
+                              href="{{ route('admin.allDossiers') }}">
                               <i class="ni ni-ungroup text-orange"></i>
                               <span class="nav-link-text">Consulter les dossiers</span>
                           </a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link {{ set_active_route('dossiers.create') }}"
-                              href="{{ route('compte.users.index') }}">
+                        <a class="nav-link {{ set_active_route('assigned-fond.index') }}"
+                            href="{{ route('assigned-fond.index') }}">
+                            <i class="ni ni-ungroup text-orange"></i>
+                            <span class="nav-link-text">Fond Dossiers</span>
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                          <a class="nav-link {{ set_active_route('compte.users.index') }}" href="{{ route('compte.users.index') }}">
                               <i class="ni ni-ui-04 text-info"></i>
                               <span class="nav-link-text">Comptes utilisateurs</span>
                           </a>

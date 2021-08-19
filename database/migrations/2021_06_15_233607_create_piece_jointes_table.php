@@ -18,8 +18,14 @@ class CreatePieceJointesTable extends Migration
             $table->string('name_doc');
             $table->string('type_doc');
             $table->string('path_doc');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
+        });
+
+        Schema::table('piece_jointes', function($table) {
+            $table->foreign('user_id')
+              ->references('id')
+              ->on('users')->onDelete('cascade');
         });
     }
 

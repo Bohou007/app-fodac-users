@@ -23,24 +23,33 @@ class Dossiers extends Model
         'user_id'
     ];
 
-    public function userConsultant()
+    public function treatDossier()
     {
-        return $this->belongsToMany(Treat_dossier::class, 'Treat_dossier', 'user_id', 'dossiers_id');
+        return $this->hasMany(Treat_dossier::class, 'dossiers_id');
     }
 
-    public function userStaff()
+    public function taches()
     {
-        return $this->belongsToMany(Treat_dossier::class, 'Approuve_dossier', 'user_id', 'dossiers_id');
+        return $this->hasOne(Taches::class, 'dossiers_id');
     }
 
-    public function PieceJointe()
+    public function approuveDossier()
+    {
+        return $this->hasMany(Approuve_dossier::class, 'dossiers_id');
+    }
+
+    public function pieceJointe()
     {
         return $this->belongsToMany(PieceJointe::class, 'piece_jointes_dossiers', 'dossiers_id', 'piece_jointe_id');
     }
 
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function observation()
+    {
+        return $this->hasMany(Observation::class, 'dossiers_id');
+    }
 }

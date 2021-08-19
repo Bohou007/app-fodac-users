@@ -10,18 +10,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Total traffic</h5>
-                            <span class="h2 font-weight-bold mb-0">350,897</span>
+                            <h5 class="card-title text-uppercase text-muted mb-0">Dossiers Soumis</h5>
+                            <span class="h2 font-weight-bold mb-0">
+                                {{ count($dossier->where('status', 0)) }}
+                            </span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                <i class="ni ni-active-40"></i>
+                            <div class="icon icon-shape bg-gradient-fodac-1 text-white rounded-circle shadow">
+                                <i class="fa fa-folder"></i>
                             </div>
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-sm">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ count($dossier) }}</span>
+                        <span class="text-nowrap">Soumis</span>
                     </p>
                 </div>
             </div>
@@ -32,18 +34,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                            <span class="h2 font-weight-bold mb-0">2,356</span>
+                            <h5 class="card-title text-uppercase text-muted mb-0">Dossiers en cours</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ count($dossier->where('status', 1)) }} </span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                <i class="ni ni-chart-pie-35"></i>
+                            <div class="icon icon-shape bg-gradient-fodac-1 text-white rounded-circle shadow">
+                                <i class="ni ni-sound-wave"></i>
                             </div>
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-sm">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>
+                            {{ (count($dossier->where('status', 1)) / count($dossier)) * 100 }}%</span>
+                        <span class="text-nowrap">En Cours</span>
+                        {{-- Depuis le mois dernier --}}
                     </p>
                 </div>
             </div>
@@ -54,18 +58,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                            <span class="h2 font-weight-bold mb-0">924</span>
+                            <h5 class="card-title text-uppercase text-muted mb-0">Dossiers en attente</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ count($dossier->where('status', 2)) }} </span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                <i class="ni ni-money-coins"></i>
+                            <div class="icon icon-shape bg-gradient-fodac-1 text-white rounded-circle shadow">
+                                <i class="fa fa-exclamation-triangle"></i>
                             </div>
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-sm">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>
+                            {{ (count($dossier->where('status', 2)) / count($dossier)) * 100 }}%</span>
+                        <span class="text-nowrap">En Attentes</span>
                     </p>
                 </div>
             </div>
@@ -76,18 +81,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-                            <span class="h2 font-weight-bold mb-0">49,65%</span>
+                            <h5 class="card-title text-uppercase text-muted mb-0">Dossiers validés</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ count($dossier->where('status', 3)) }}</span>
                         </div>
                         <div class="col-auto">
-                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                <i class="ni ni-chart-bar-32"></i>
+                            <div class="icon icon-shape bg-gradient-fodac-1 text-white rounded-circle shadow">
+                                <i class="ni ni-check-bold"></i>
                             </div>
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-sm">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>
+                            {{ (count($dossier->where('status', 3)) / count($dossier)) * 100 }}%</span>
+                        <span class="text-nowrap">Validés</span>
                     </p>
                 </div>
             </div>
@@ -96,258 +102,174 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-xl-4">
-            <!-- Members list group card -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header">
-                    <!-- Title -->
-                    <h5 class="h3 mb-0">Team members</h5>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <!-- List group -->
-                    <ul class="list-group list-group-flush list my--3">
+<div class="row">
+    <div class="col-xl-4">
+        <!-- Members list group card -->
+        <div class="card card-home">
+            <!-- Card header -->
+            <div class="card-header">
+                <!-- Title -->
+                <h5 class="h3 mb-0">Les derniers Dossiers</h5>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <!-- List group -->
+                <ul class="list-group list-group-flush list my--3">
+                    @forelse($dossier->take(4)->reverse() as $index => $alldossier)
                         <li class="list-group-item px-0">
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <!-- Avatar -->
                                     <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
+                                        <img alt="Image placeholder" src="{{ asset('images/icon-dossier-3.png') }}">
                                     </a>
                                 </div>
-                                <div class="col ml--2">
+                                <div class="col ml--1">
                                     <h4 class="mb-0">
-                                        <a href="#!">John Michael</a>
+                                        <a href="#!">{{ $alldossier->name }}</a>
                                     </h4>
                                     <span class="text-success">●</span>
-                                    <small>Online</small>
+                                    <small>
+                                        @if ($alldossier->status == 0)
+                                            <i class="bg-warning"></i>
+                                            <span class="status">
+                                                Pas en traitement
+                                            </span>
+                                        @elseif ($alldossier->status == 1)
+                                            <i class="bg-warning"></i>
+                                            <span class="status">
+                                                En cours de traitement
+                                            </span>
+                                        @elseif ($alldossier->status == 2)
+                                            <i class="bg-warning"></i>
+                                            <span class="status">
+                                                En attente de complement
+                                            </span>
+                                        @elseif ($alldossier->status == 3)
+                                            <i class="bg-warning"></i>
+                                            <span class="status">
+                                                Dossier validé
+                                            </span>
+                                        @else
+                                            <i class="bg-warning"></i>
+                                            <span class="status">
+                                                Dossier échoué
+                                            </span>
+                                        @endif
+                                    </small>
                                 </div>
                                 <div class="col-auto">
-                                    <button type="button" class="btn btn-sm btn-primary">Add</button>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
+                                    <a href="{{ route('admin.traiteDossieerUpdate', $alldossier->id) }}"
+                                        class="btn btn-sm btn-fodac-1">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </div>
-                                <div class="col ml--2">
-                                    <h4 class="mb-0">
-                                        <a href="#!">Alex Smith</a>
-                                    </h4>
-                                    <span class="text-warning">●</span>
-                                    <small>In a meeting</small>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-sm btn-primary">Add</button>
-                                </div>
                             </div>
                         </li>
+                    @empty
+
                         <li class="list-group-item px-0">
                             <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                                    </a>
-                                </div>
-                                <div class="col ml--2">
-                                    <h4 class="mb-0">
-                                        <a href="#!">Samantha Ivy</a>
-                                    </h4>
-                                    <span class="text-danger">●</span>
-                                    <small>Offline</small>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-sm btn-primary">Add</button>
-                                </div>
+                                Pas de dossier soumis pour le moment
                             </div>
                         </li>
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                                    </a>
-                                </div>
-                                <div class="col ml--2">
-                                    <h4 class="mb-0">
-                                        <a href="#!">John Michael</a>
-                                    </h4>
-                                    <span class="text-success">●</span>
-                                    <small>Online</small>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-sm btn-primary">Add</button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+
+                    @endforelse
+
+                </ul>
             </div>
         </div>
-        <div class="col-xl-4">
-            <!-- Checklist -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header">
-                    <!-- Title -->
-                    <h5 class="h3 mb-0">To do list</h5>
-                </div>
-                <!-- Card body -->
-                <div class="card-body p-0">
-                    <!-- List group -->
-                    <ul class="list-group list-group-flush" data-toggle="checklist">
-                        <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                            <div class="checklist-item checklist-item-success">
-                                <div class="checklist-info">
-                                    <h5 class="checklist-title mb-0">Call with Dave</h5>
-                                    <small>10:30 AM</small>
-                                </div>
-                                <div>
-                                    <div class="custom-control custom-checkbox custom-checkbox-success">
-                                        <input class="custom-control-input" id="chk-todo-task-1" type="checkbox" checked>
-                                        <label class="custom-control-label" for="chk-todo-task-1"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                            <div class="checklist-item checklist-item-warning">
-                                <div class="checklist-info">
-                                    <h5 class="checklist-title mb-0">Lunch meeting</h5>
-                                    <small>10:30 AM</small>
-                                </div>
-                                <div>
-                                    <div class="custom-control custom-checkbox custom-checkbox-warning">
-                                        <input class="custom-control-input" id="chk-todo-task-2" type="checkbox">
-                                        <label class="custom-control-label" for="chk-todo-task-2"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                            <div class="checklist-item checklist-item-info">
-                                <div class="checklist-info">
-                                    <h5 class="checklist-title mb-0">Argon Dashboard Launch</h5>
-                                    <small>10:30 AM</small>
-                                </div>
-                                <div>
-                                    <div class="custom-control custom-checkbox custom-checkbox-info">
-                                        <input class="custom-control-input" id="chk-todo-task-3" type="checkbox">
-                                        <label class="custom-control-label" for="chk-todo-task-3"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                            <div class="checklist-item checklist-item-danger">
-                                <div class="checklist-info">
-                                    <h5 class="checklist-title mb-0">Winter Hackaton</h5>
-                                    <small>10:30 AM</small>
-                                </div>
-                                <div>
-                                    <div class="custom-control custom-checkbox custom-checkbox-danger">
-                                        <input class="custom-control-input" id="chk-todo-task-4" type="checkbox" checked>
-                                        <label class="custom-control-label" for="chk-todo-task-4"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+    </div>
+    <div class="col-xl-4">
+        <!-- Checklist -->
+        <div class="card card-home">
+            <!-- Card header -->
+            <div class="card-header">
+                <!-- Title -->
+                <h5 class="h3 mb-0">Les derniers messages</h5>
             </div>
-        </div>
-        <div class="col-xl-4">
-            <!-- Progress track -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header">
-                    <!-- Title -->
-                    <h5 class="h3 mb-0">Progress track</h5>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <!-- List group -->
-                    <ul class="list-group list-group-flush list my--3">
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <h5>Argon Design System</h5>
-                                    <div class="progress progress-xs mb-0">
-                                        <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="60"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+            <!-- Card body -->
+            <div class="card-body p-0">
+                <!-- List group -->
+                <div class="list-group list-group-flush">
+                    @forelse($supports->take(2)->reverse() as $index => $support)
+
+                        <a href="#"
+                            class="list-group-item list-group-item-action flex-column align-items-start py-4 px-4">
+                            <div class="d-flex w-100 justify-content-between">
+                                <div>
+                                    <div class="d-flex w-100 align-items-center">
+                                        <img src="{{ asset('images/user.png') }}" alt="Image placeholder"
+                                            class="avatar avatar-xs mr-2">
+                                        <h5 class="mb-1">{{ $support->user->last_name }} {{ $support->user->first_name }}</h5>
                                     </div>
                                 </div>
+                                <small>{{ $support->created_at->diffForHumans() }}</small>
                             </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/angular.jpg">
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <h5>Angular Now UI Kit PRO</h5>
-                                    <div class="progress progress-xs mb-0">
-                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/sketch.jpg">
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <h5>Black Dashboard</h5>
-                                    <div class="progress progress-xs mb-0">
-                                        <div class="progress-bar bg-red" role="progressbar" aria-valuenow="72"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item px-0">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <!-- Avatar -->
-                                    <a href="#" class="avatar rounded-circle">
-                                        <img alt="Image placeholder" src="../../assets/img/theme/react.jpg">
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <h5>React Material Dashboard</h5>
-                                    <div class="progress progress-xs mb-0">
-                                        <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="90"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                            <h4 class="mt-3 mb-1"> {{ $support->objet }}</h4>
+                            <p class="text-sm mb-0">
+                                {{ Str::limit($support->message, 100, '...') }}
+                            </p>
+                        </a>
+
+
+                    @empty
+                        <a href="#"
+                            class="list-group-item list-group-item-action flex-column align-items-start py-4 px-4">
+                            <h4 class="mt-3 mb-1"> Pas de message</h4>
+                        </a>
+                    @endforelse
+
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-xl-4">
+        <!-- Progress track -->
+        <div class="card card-home">
+            <!-- Card header -->
+            <div class="card-header">
+                <!-- Title -->
+                <h5 class="h3 mb-0">Vos dernières notifications</h5>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
+                <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+                    @forelse($notifications->take(3)->reverse() as $index => $notification)
+                        <div class="timeline-block">
+                            @if ($notification->type == 'traitement')
+                                <span class="timeline-step badge-success">
+                                    <i class="ni ni-bell-55"></i>
+                                </span>
+                            @else
+                                <span class="timeline-step badge-danger">
+                                    <i class="ni ni-email-83"></i>
+                                </span>
+                            @endif
+
+                            <div class="timeline-content">
+                                <div class="d-flex justify-content-between pt-1">
+                                    <div>
+                                        <span
+                                            class="text-muted text-sm font-weight-bold">{{ $notification->object }}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <small class="text-muted"><i
+                                                class="fas fa-clock mr-1"></i>{{ $notification->created_at->diffForHumans() }}</small>
+                                    </div>
+                                </div>
+                                <h6 class="text-sm mt-1 mb-0">{{ Str::limit($notification->message, 35, '...') }}
+                                </h6>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="timeline-block">
+                            <p>Pas de nouvelle notification</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

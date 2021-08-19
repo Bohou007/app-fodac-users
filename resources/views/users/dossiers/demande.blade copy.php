@@ -158,36 +158,7 @@
 
 
     <script src="{{ asset('js/ckeditor.js') }}"></script>
-    <script type="text/javascript" defer>
-        $(document).ready(function() {
-            $('#ckeditor').ckeditor();
 
-            var i = 0;
-            $(".add").click(function() {
-                ++i;
-                $("#dynamicTable").append('<tr>' +
-                    '<td><input type="text" id="addmore_actionnaire' + i + '" name="addmore[' + i +
-                    '][actionnaire]" placeholder="Entrer le nom" class="form-control nom" /></td>' +
-                    '<td><input type="text" id="addmore_montant' + i + '" name="addmore[' + i +
-                    '][montant]" placeholder="Enter le montant" class="form-control montant" /></td>' +
-                    '<td><input type="text" id="addmore_pourcentage' + i + '" name="addmore[' + i +
-                    '][pourcentage]" class="form-control pourcent" value="" readOnly /></td>' +
-                    '<td><button type="button" class="btn btn-danger btn-sm remove-tr">X</button> <button type="button" name="add" id="add" class="add btn btn-info btn-sm">Ajouter</button></td>' +
-                    '</tr>');
-
-
-            });
-
-            // $(this).attr('disabled', true);
-
-            //remove input
-            $('.remove-tr').on('click', function() {
-                $(this).parents('tr').remove();
-                $('#result').val('');
-                $('.add').removeAttr('disabled');
-            });
-        });
-    </script>
     <!-- JQUERY STEP -->
     <script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js') }}" defer></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}" defer></script>

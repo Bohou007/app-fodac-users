@@ -15,10 +15,20 @@ class CreateApprouveDossiersTable extends Migration
     {
         Schema::create('approuve_dossiers', function (Blueprint $table) {
             $table->id();
-            $table->integer('dossiers_id');
-            $table->integer('user_id');
+            $table->integer('dossiers_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
             $table->string('role');
+            $table->string('observation');
             $table->timestamps();
+        });
+
+        Schema::table('approuve_dossiers', function($table) {
+            $table->foreign('dossiers_id')
+              ->references('id')
+              ->on('dossiers')->onDelete('cascade');
+            $table->foreign('user_id')
+              ->references('id')
+              ->on('users')->onDelete('cascade');
         });
     }
 

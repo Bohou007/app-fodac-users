@@ -13,7 +13,7 @@
                         <h5 class="h3 mb-0">Sauvegardez vos dcuments</h5>
                     </div>
                     <div class="col-4 text-right">
-                        <a href="{{ route('document-complementaires.create') }}" class="btn btn-sm btn-neutral">Ajouter</a>
+                        <a href="{{ route('documents-administrative.create') }}" class="btn btn-sm btn-neutral">Ajouter</a>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <a href="#" class="avatar rounded-circle mr-3">
-                                                    <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
+                                                    <img alt="Image placeholder" src="{{ asset('images/pdf-image.png') }}">
                                                 </a>
                                                 <div class="media-body">
                                                     <span class="name mb-0 text-sm">{{ $document->name_doc }}</span>
@@ -74,9 +74,11 @@
                                             {{ $document->type_doc }}
                                         </td>
                                         <td>
-                                            <a href="{{ asset($document->path_doc) }}" target="_blank" class="btn btn-sm btn-neutral">
+                                            <a href="{{ asset('documents/'. $document->path_doc) }}" target="_blank" class="btn btn-sm btn-neutral" style="color: #3454a1 !important;">
                                                 <i class="fa fa-eye"></i>
-                                                Voir le document
+                                            </a>
+                                            <a href="{{asset('documents/'. $document->path_doc)}}" download="{{ $document->name }}_{{ Auth::user()->first_name }}-{{ Auth::user()->last_name }}_{{ $document->name_doc }} - document_fodac.pdf" class="btn btn-fodac-1 btn-sm">
+                                                <i class="fa fa-download fa-sm mr-1"></i>
                                             </a>
                                         </td>
                                     </tr>

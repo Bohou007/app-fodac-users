@@ -57,9 +57,11 @@ class DocumentsController extends Controller
                 $pj = new PieceJointe();
                 $pj->name_doc = $request->doc_name;
                 $pj->type_doc = "Sauvregarde";
-                $pj->path_doc = $path_doc;
+                $pj->path_doc = $docprojet_fileName;
                 $pj->user_id =Auth::user()->id;
                 $pj->save();
+
+                flashy()->success('Votre document a été sauvegarder avec success.');
 
                 return redirect()->route('documents-administrative.index');
         }

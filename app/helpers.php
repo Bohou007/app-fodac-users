@@ -24,6 +24,19 @@ if (! function_exists('page_title')) {
     }
 }
 
+if (! function_exists('breackumbs')) {
+
+    function breackumbs($title){
+         $base_title = ' ';
+        if ($title === '') {
+            return $base_title;
+        }
+         else {
+            return $title;
+        }
+    }
+}
+
   if (! function_exists('format_date')) {
       function format_date($date){
         return $date->format('d/m/Y H:i');

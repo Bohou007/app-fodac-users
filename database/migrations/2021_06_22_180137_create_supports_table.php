@@ -16,11 +16,17 @@ class CreateSupportsTable extends Migration
         Schema::create('supports', function (Blueprint $table) {
             $table->id();
             $table->string('objet');
-            $table->string('message');
-            $table->string('reponse')->nullable();
+            $table->text('message');
+            $table->text('reponse')->nullable();
             $table->string('to');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
+        });
+
+        Schema::table('supports', function($table) {
+            $table->foreign('user_id')
+              ->references('id')
+              ->on('users')->onDelete('cascade');
         });
     }
 

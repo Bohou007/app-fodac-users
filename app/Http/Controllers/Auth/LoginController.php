@@ -35,6 +35,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        // flashy()->success('Deconnexion success, au plaisir de votre revoir');
         $this->middleware('guest')->except('logout');
     }
 }
