@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approuve_dossier;
 use App\Models\Dossiers;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FondDossierController extends Controller
 {
@@ -36,7 +39,32 @@ class FondDossierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dossier = Dossiers::findOrFail($request->dossier_id);
+        $dossier->approuve = $request->approuve;
+        $dossier->fond_fodac = $request->fond_dossier;
+        $dossier->save();
+
+        $approve = new Approuve_dossier();
+        $approve->dossiers_id = $dossier->id;
+        $approve->user_id = Auth::user()->id;
+        $approve->observation = $request->description;
+        $approve->role = Auth::user()->account_type;
+        $approve->save();
+
+        $notify = new Notifications();
+        $result = $dossier->approuve == 1 ? 'Approbation de fond pour ': 'Desapprobation de ';
+        $notify->name = $result .'votre dossier '.$dossier->name. '.';
+        $notify->type = 'Information';
+        $notify->description = $request->description;
+        $notify->status = 0;
+        $notify->user_id = $dossier->user->id;
+        $notify->group = Auth::user()->account_type;
+        $notify->save();
+
+        flashy()->success('Taitement effectué avec success !');
+
+        $dossiers = Dossiers::where('status', 3)->get();
+        return view('admin.dossiers.fondDossier', compact('dossiers'));
     }
 
     /**

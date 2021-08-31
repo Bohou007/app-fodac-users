@@ -234,7 +234,7 @@
                 <!-- Card body -->
                 <div class="card-body">
                     <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
-                        @forelse($notifications->take(3)->reverse() as $index => $notification)
+                        @forelse($notifications->where('status', 0)->take(3)->reverse() as $index => $notification)
                             <div class="timeline-block">
                                 @if ($notification->type == 'traitement')
                                     <span class="timeline-step badge-success">
@@ -250,14 +250,14 @@
                                     <div class="d-flex justify-content-between pt-1">
                                         <div>
                                             <span
-                                                class="text-muted text-sm font-weight-bold">{{ $notification->object }}</span>
+                                                class="text-muted text-sm font-weight-bold">{{ $notification->name }}</span>
                                         </div>
                                         <div class="text-right">
                                             <small class="text-muted"><i
                                                     class="fas fa-clock mr-1"></i>{{ $notification->created_at->diffForHumans() }}</small>
                                         </div>
                                     </div>
-                                    <h6 class="text-sm mt-1 mb-0">{{ Str::limit($notification->message, 35, '...') }}
+                                    <h6 class="text-sm mt-1 mb-0">{{ Str::limit($notification->description, 35, '...') }}
                                     </h6>
                                 </div>
                             </div>

@@ -44,30 +44,35 @@
                         <!-- Dropdown header -->
                         <div class="px-3 py-3">
                             <h6 class="text-sm text-muted m-0">Vous avez <strong
-                                    class="text-primary">{{ count(Auth::user()->notifications) }}</strong>
-                                notification{{ count(Auth::user()->notifications) > 1 ? 's.' : '.' }}
+                                    class="text-primary">{{ count(Auth::user()->notifications->where('status', 0)) }}</strong>
+                                notification{{ count(Auth::user()->notifications->where('status', 0)) > 1 ? 's.' : '.' }}
                             </h6>
                         </div>
                         <!-- List group -->
                         <div class="list-group list-group-flush">
-                            @forelse(Auth::user()->notifications->take(5)->reverse() as $index => $notification)
+                            @forelse(Auth::user()->notifications->where('status', 0)->take(5)->reverse() as $index => $notification)
                                 <a href="#!" class="list-group-item list-group-item-action">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <!-- Avatar -->
-                                            <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg"
+                                            @if($notification->type == 'Information')
+                                                <img alt="Image placeholder" src="{{ asset('images/icon-cloche-3.png') }}"
                                                 class="avatar rounded-circle">
+                                            @else
+                                                <img alt="Image placeholder" src="{{ asset('images/icon-enveloppe-2.png') }}"
+                                                class="avatar rounded-circle">
+                                            @endif    
                                         </div>
                                         <div class="col ml--2">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    <h4 class="mb-0 text-sm">John Snow</h4>
+                                                    <h4 class="mb-0 text-sm">Agent Fodac</h4>
                                                 </div>
                                                 <div class="text-right text-muted">
-                                                    <small>2 hrs ago</small>
+                                                    <small>{{ $notification->created_at->diffForHumans() }}</small>
                                                 </div>
                                             </div>
-                                            <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
+                                            <p class="text-sm mb-0">{{ Str::limit($notification->description, 39, '...') }}</p>
                                         </div>
                                     </div>
                                 </a>

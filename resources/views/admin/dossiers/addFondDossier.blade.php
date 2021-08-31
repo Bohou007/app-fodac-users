@@ -246,7 +246,7 @@
                                             <h5 class="h3 mb-0 text-dark">Approbation du dossier</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form action="{{ route('admin.observations.store') }}" method="POST"
+                                            <form action="{{ route('assigned-fond.store') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="dossier_id" value="{{ $dossier->id }}"
@@ -273,7 +273,7 @@
                                                         <label class="form-control-label" for="fond_dossier"><b>Assignation
                                                                 du fond dossier (*)</b></label> <br>
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control @error('fond_dossier') is-invalid @enderror" value="{{ old('fond_dossier') }}"
+                                                            <input type="number" name="fond_dossier" class="form-control @error('fond_dossier') is-invalid @enderror" value="{{ old('fond_dossier') }}"
                                                                 id="fond_dossier"  placeholder="Fond du dossier..." aria-label="Fond du dossier..."
                                                                 aria-describedby="inputGroupPrepend2" required="">
                                                             @error('fond_dossier')
@@ -296,7 +296,7 @@
                                                                 (*)</b></label> <br>
                                                         <textarea
                                                             class="form-control @error('content') is-invalid @enderror"
-                                                            required name="content" id="observation" cols="30"
+                                                            required name="description" id="observation" cols="30"
                                                             rows="10"></textarea>
                                                         @error('content')
                                                             <span class="invalid-feedback text-left" role="alert">

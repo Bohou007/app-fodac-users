@@ -63,7 +63,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @forelse ($dossiers->whereNull('fond_fodac')->whereNull('approuve')->where('status', 3) as $index => $dossier)
+                                            @forelse ($dossiers->whereNull('fond_fodac')->whereNull('approuve') as $index => $dossier)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $dossier->user->last_name }}
@@ -140,7 +140,7 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            @forelse ($dossiers->whereNotNull('fond_fodac')->where('approuve', 1)->where('status', 3) as $dossier)
+                                            @forelse ($dossiers->whereNotNull('fond_fodac')->where('approuve', 1)->where('status', 3) as $index => $dossier)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $dossier->user->last_name }}

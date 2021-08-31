@@ -18,8 +18,9 @@ class CreateNotificationsTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->text('description');
+            $table->integer('status')->default(0);
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('group');
+            $table->string('group');
             $table->timestamps();
         });
 

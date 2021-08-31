@@ -21,7 +21,7 @@
     <div class="row mt">
       <!-- Formulaire de creation de role -->
       <div class="col-lg-12 bg-white shadow p-5 mb-5" id="">
-          <form class="style-form"action="{{route('roles.store')}}" method="POST">
+          <form class="style-form"action="{{route('admin.role.store')}}" method="POST">
             @csrf
             <div class="col-md-12 input-group-lg">
               <div class="col-lg-12">
@@ -32,7 +32,7 @@
                   {{-- <h4 class="mb"> Infos utilisateur</h4> --}}
                 </div>
                 <div class="col-lg-6 mb-3 p-0 text-right">
-                  <h4 class="mb text-uppercase"> <a class="btn brook-btn" href="{{route('roles.index')}}"><i class="fa fa-list"></i> rôles</a> </h4>
+                  <h4 class="mb text-uppercase"> <a class="btn brook-btn" href="{{route('admin.roles')}}"><i class="fa fa-list"></i> rôles</a> </h4>
                 </div>
               </div>
               <div class="col-lg-12 mb-3">
@@ -41,7 +41,7 @@
                 @if ($errors->has('display_name'))<p class="text-danger">{{ $errors->first('display_name') }}</p> @endif
               </div>
 
-              @include('pages.roles._form')
+              @include('admin.roles._form')
             </div>
 
             <div class="col-md-12 input-group-lg mt-5">

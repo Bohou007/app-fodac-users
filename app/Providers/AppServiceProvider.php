@@ -5,7 +5,6 @@ namespace App\Providers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,8 +27,10 @@ class AppServiceProvider extends ServiceProvider
         //
         App::setLocale('fr');
 
-        // Gate::before(function ($user, $ability) {
-        //     return $user->hasRole('Super Admin') ? true : null;
-        // });
+        // $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
     }
 }

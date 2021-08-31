@@ -37,6 +37,22 @@ if (! function_exists('breackumbs')) {
     }
 }
 
+if (! function_exists('getResult')) {
+    function getResult($dossier_id)
+    {
+        if ( $dossier_id == 2) {
+            return ' est en attente.';
+         } elseif($dossier_id == 3){
+            return ' est validé';
+         }
+         else {
+           return ' a echoué';
+         }
+
+    }
+}
+
+
   if (! function_exists('format_date')) {
       function format_date($date){
         return $date->format('d/m/Y H:i');

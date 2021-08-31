@@ -9,7 +9,7 @@
   <div class="card-header">
     <span class="cui-utils-title">
       <strong>Roles</strong>
-      <a href="{{route('roles.create')}}" class="btn btn-sm btn-primary ml-2"
+      <a href="{{route('admin.role.create')}}" class="btn btn-sm btn-primary ml-2"
         ><i class="fa fa-plus"></i> Nouveau rôle</a
       >
     </span>
@@ -35,10 +35,10 @@
                         <td>{{$role->created_at->format('d-m-Y \à H:i:s')}}</td>
                         <td>
                             @can('voir_roles')
-                              <a class="btn btn-secondary btn-xs text-light" href="{{route('roles.show', $role->id)}}"><i class="fa fa-eye"></i></a>
+                              <a class="btn btn-secondary btn-xs text-light" href="{{route('admin.role.show', $role->id)}}"><i class="fa fa-eye"></i></a>
                             @endcan
                             @can('editer_roles')
-                              <a class="btn btn-warning btn-xs text-light" href="{{route('roles.edit', $role->id)}}"><i class="fa fa-pen"></i></a>
+                              <a class="btn btn-warning btn-xs text-light" href="{{route('admin.role.edit', $role->id)}}"><i class="fa fa-pen"></i></a>
                             @endcan
                             @can('supprimer_roles')
                               <a class="btn btn-danger btn-xs text-light" href="#" data-toggle="modal" data-target="#delete{{$role->id}}"><i class="fa fa-trash-alt"></i></a>
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn" data-dismiss="modal" style="background: #f4bd19 !important; color: #000">Annuler</button>
-                                            <a type="submit" id="supprimer" href="{{route('roles.delete', $role->id)}}" class="btn btn-danger">Supprimer</a>
+                                            <a type="submit" id="supprimer" href="{{route('admin.role.delete', $role->id)}}" class="btn btn-danger">Supprimer</a>
                                         </div>
                                       </form>
                                     </div>

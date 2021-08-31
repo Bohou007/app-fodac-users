@@ -3,7 +3,7 @@
       <div class="scrollbar-inner">
           <!-- Brand -->
           <div class="sidenav-header d-flex align-items-center">
-              <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+              <a class="navbar-brand {{ set_active_route('home') }}" href="{{ route('home') }}">
                   <img src="{{ asset('images/fodac-logo.png') }}" class="navbar-brand-img" alt="...">
               </a>
               <div class="ml-auto">
@@ -29,33 +29,42 @@
                               <span class="nav-link-text">Tableau de bord</span>
                           </a>
                       </li>
-                      <li class="nav-item">
-                          <a class="nav-link {{ set_active_route('admin.allDossiers') }}"
-                              href="{{ route('admin.allDossiers') }}">
-                              <i class="ni ni-ungroup text-orange"></i>
-                              <span class="nav-link-text">Consulter les dossiers</span>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link {{ set_active_route('assigned-fond.index') }}"
-                            href="{{ route('assigned-fond.index') }}">
-                            <i class="ni ni-ungroup text-orange"></i>
-                            <span class="nav-link-text">Fond Dossiers</span>
-                        </a>
-                    </li>
-                      <li class="nav-item">
-                          <a class="nav-link {{ set_active_route('compte.users.index') }}" href="{{ route('compte.users.index') }}">
-                              <i class="ni ni-ui-04 text-info"></i>
-                              <span class="nav-link-text">Comptes utilisateurs</span>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link {{ set_active_route('admin.roles') }}"
-                              href="{{ route('admin.roles') }}">
-                              <i class="ni ni-folder-17 text-info"></i>
-                              <span class="nav-link-text">Gestion des roles</span>
-                          </a>
-                      </li>
+                      @can('voir_dossiers')
+                          <li class="nav-item">
+                              <a class="nav-link {{ set_active_route('admin.allDossiers') }}"
+                                  href="{{ route('admin.allDossiers') }}">
+                                  <i class="ni ni-ungroup text-orange"></i>
+                                  <span class="nav-link-text">Consulter les dossiers</span>
+                              </a>
+                          </li>
+                      @endcan
+                      @can('approuver_dossiers')
+                          <li class="nav-item">
+                              <a class="nav-link {{ set_active_route('assigned-fond.index') }}"
+                                  href="{{ route('assigned-fond.index') }}">
+                                  <i class="ni ni-ungroup text-orange"></i>
+                                  <span class="nav-link-text">Fond Dossiers</span>
+                              </a>
+                          </li>
+                      @endcan
+                      @can('admin')
+                          <li class="nav-item">
+                              <a class="nav-link {{ set_active_route('compte.users.index') }}"
+                                  href="{{ route('compte.users.index') }}">
+                                  <i class="ni ni-ui-04 text-info"></i>
+                                  <span class="nav-link-text">Comptes utilisateurs</span>
+                              </a>
+                          </li>
+                      @endcan
+                      @can('voir_roles')
+                          <li class="nav-item">
+                              <a class="nav-link {{ set_active_route('admin.roles') }}"
+                                  href="{{ route('admin.roles') }}">
+                                  <i class="ni ni-folder-17 text-info"></i>
+                                  <span class="nav-link-text">Gestion des roles</span>
+                              </a>
+                          </li>
+                      @endcan
                       <li class="nav-item">
                           <a class="nav-link {{ set_active_route('notification.index') }}"
                               href="{{ route('notification.index') }}">

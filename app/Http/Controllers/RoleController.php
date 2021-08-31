@@ -20,7 +20,7 @@ class RoleController extends Controller
         $roles = Role::paginate(10);
         $permissions = Permission::all();
 
-        return view('pages.roles.index', compact('roles', 'permissions'));
+        return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
     /**
@@ -31,7 +31,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        return view('pages.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -67,7 +67,7 @@ class RoleController extends Controller
                 $role->syncPermissions($request->permissions);
                 flash('Rôle <strong>'.$role->display_name.'</strong> ajouté.')->success()->important();
             }
-            return redirect()->route('roles.index');
+            return redirect()->route('admin.roles');
         // } else {
         //    return back();
         // }

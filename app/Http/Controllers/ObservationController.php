@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dossiers;
+use App\Models\Notifications;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,17 @@ class ObservationController extends Controller
         $dossier->status = $request->decision;
         $dossier->save();
 
+        $notify = new Notifications();
+
+        $result = getResult($dossier->id);
+            $notify->name = 'Votre dossier'. $dossier->name . $result;
+            $notify->type = 'Information';
+            $notify->description = $request->content;
+            $notify->status = 0;
+            $notify->user_id = $dossier->user->id;
+            $notify->group = Auth::user()->account_type;
+            $notify->save();
+
         $observation = new Observation();
         $observation->decision = $dossier->status;
         $observation->content = $request->content ;
@@ -76,6 +88,7 @@ class ObservationController extends Controller
         //
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -90,6 +103,17 @@ class ObservationController extends Controller
             $dossier = Dossiers::findOrFail($request->dossier_id);
             $dossier->status = $request->decision;
             $dossier->save();
+
+            $notify = new Notifications();
+
+            $result = getResult($dossier->id);
+            $notify->name = 'Votre dossier'. $dossier->name . $result;
+            $notify->type = 'Information';
+            $notify->description = $request->content;
+            $notify->status = 0;
+            $notify->user_id = $dossier->user->id;
+            $notify->group = Auth::user()->account_type;
+            $notify->save();
 
             $observation = Observation::findOrFail($id);
             $observation->decision = $dossier->status;

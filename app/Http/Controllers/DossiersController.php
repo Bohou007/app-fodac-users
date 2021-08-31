@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dossiers;
+use App\Models\Notifications;
 use App\Models\PieceJointe;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
+
 
 class DossiersController extends Controller
 {
@@ -77,6 +81,16 @@ class DossiersController extends Controller
         $dossier = Dossiers::findOrFail($id);
         $dossier->status = 1;
         $dossier->save();
+
+        $notify = new Notifications();
+        $notify->name = 'Votre dossier'. $dossier->name .'est en cour de traitememt.';
+        $notify->type = 'Information';
+        $notify->description = 'Le traitement de votre vient de debuter actuellement vous serez informez de tous ces avancement. Merci de rester a l\'écoute.';
+        $notify->status = 0;
+        $notify->user_id = $dossier->user->id;
+        $notify->group = Auth::user()->account_type;
+        $notify->save();
+
         flashy()->info('Vous avez debuter le traitement de ce dossier.');
         return view('admin.dossiers.show', compact('dossier'));
     }
@@ -177,4 +191,5 @@ class DossiersController extends Controller
     {
         //
     }
+
 }

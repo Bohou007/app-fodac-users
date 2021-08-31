@@ -16,6 +16,7 @@ class Notifications extends Model
         'name',
         'type',
         'description',
+        'status',
         'group',
         'user_id'
     ];

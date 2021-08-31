@@ -41,6 +41,8 @@ class Permission extends PermissionSpatie
             'approuver_dossiers',
             'desapprouve_dossiers',
             'ajouter_fonds_dossiers',
+
+            'fodac_agent',
         ];
     }
 }
