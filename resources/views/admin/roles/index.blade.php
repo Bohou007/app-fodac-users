@@ -1,4 +1,4 @@
-@extends('layouts.appAdn')
+@extends('layouts.appAdn', ['title' => 'Gestion des roles'])
 
 @section('content')
 <!-- START: tables/datatables -->
@@ -35,34 +35,40 @@
                         <td>{{$role->created_at->format('d-m-Y \à H:i:s')}}</td>
                         <td>
                             @can('voir_roles')
-                              <a class="btn btn-secondary btn-xs text-light" href="{{route('admin.role.show', $role->id)}}"><i class="fa fa-eye"></i></a>
+                              <a class="btn btn-fodac-1 btn-sm" href="{{route('admin.role.show', $role->id)}}"><i class="fa fa-eye"></i></a>
                             @endcan
                             @can('editer_roles')
-                              <a class="btn btn-warning btn-xs text-light" href="{{route('admin.role.edit', $role->id)}}"><i class="fa fa-pen"></i></a>
+                              <a class="btn btn-warnings btn-sm" href="{{route('admin.role.edit', $role->id)}}"><i class="fa fa-pen"></i></a>
                             @endcan
                             @can('supprimer_roles')
-                              <a class="btn btn-danger btn-xs text-light" href="#" data-toggle="modal" data-target="#delete{{$role->id}}"><i class="fa fa-trash-alt"></i></a>
-                              <!-- Modal Suprimer role-->
+                              <a class="btn btn-dangers btn-sm" href="#" data-toggle="modal" data-target="#delete{{$role->id}}"><i class="fa fa-trash-alt"></i></a>
+
                               <div class="modal fade" id="delete{{$role->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header" style="background: #0d6e77 !important">
-                                          <h4 class="modal-title" id="myModalLabel">Suppression de rôle</h4>
-                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">
+                                                Suppression de rôle</h5>
+                                            <button type="button" class="close"
+                                                data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                        <form>
-                                        <div class="modal-body">
+                                        <div class="modal-body ">
                                             <label> Confirmez-vous la suppression du rôle <strong>{{$role->display_name}}</strong> ?</label>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal" style="background: #f4bd19 !important; color: #000">Annuler</button>
-                                            <a type="submit" id="supprimer" href="{{route('admin.role.delete', $role->id)}}" class="btn btn-danger">Supprimer</a>
+                                            <form action="{{ route('admin.role.delete', $role->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="button" class="btn btn-fodac-1"
+                                                    data-dismiss="modal">Annuler</button>
+                                                <button type="submit" id="supprimer" class="btn btn-dangers">Supprimer</button>
+                                            </form>
                                         </div>
-                                      </form>
                                     </div>
                                 </div>
-                              </div>
-                              <!--fin modal-->
+                            </div>
                             @endcan
                         </td>
 

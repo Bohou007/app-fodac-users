@@ -83,9 +83,9 @@ class DossiersController extends Controller
         $dossier->save();
 
         $notify = new Notifications();
-        $notify->name = 'Votre dossier'. $dossier->name .'est en cour de traitememt.';
+        $notify->name = 'Votre dossier '. $dossier->name .' est en cour de traitememt.';
         $notify->type = 'Information';
-        $notify->description = 'Le traitement de votre vient de debuter actuellement vous serez informez de tous ces avancement. Merci de rester a l\'écoute.';
+        $notify->description = 'Le traitement de votre dossier vient de debuter. Vous serez informez de tous ces avancement. Merci de rester a l\'écoute.';
         $notify->status = 0;
         $notify->user_id = $dossier->user->id;
         $notify->group = Auth::user()->account_type;

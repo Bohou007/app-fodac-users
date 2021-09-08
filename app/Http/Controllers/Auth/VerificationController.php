@@ -47,20 +47,39 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
-    public function activate(Request $request, $token = null){
+    // public function activate(Request $request, $token = null){
+
+    //     $user = User::where('remember_token', $token)->first();
+    //     $newtoken = Str::random(40) . time();
+    //     $date = now();
+    //     if (empty($user)) {
+    //         // \LogActivity::addToLog('Lien d\'activation expiré ou invalide :: Par '.$user->email);
+    //         flashy()->error('Votre lien d\'activation est expiré ou invalide.');
+    //         return redirect()->route('login');
+    //     }
+    //     $user->update(['remember_token' => $newtoken, 'email_verified_at' => $date]);
+    //     // \LogActivity::addToLog('Lien d\'activation valide et compte maintenant activé :: Par '.$user->email );
+    //     flash('Félicitations! <br> Votre compte est maintenant activé. <br> Vous pouvez à présent vous connecter.')->success()->important();
+    //     return redirect()->route('login');
+
+    // }
+
+    public function activate(Request $request, $token){
 
         $user = User::where('remember_token', $token)->first();
-        $newtoken = Str::random(40) . time();
-        $date = now();
+
         if (empty($user)) {
             // \LogActivity::addToLog('Lien d\'activation expiré ou invalide :: Par '.$user->email);
-            flash('Votre lien d\'activation est expiré ou invalide.')->error()->important();
+            flashy()->error('Votre lien d\'activation est invalide ou a déja été utilisé.');
             return redirect()->route('login');
+        }else {
+            if ($user->email_verified_at == null) {
+                return view('auth.newPassword');
+            }else{
+                flashy()->error('Votre lien d\'activation est invalide ou a déja été utilisé.');
+                return redirect()->route('login');
+            }
         }
-        $user->update(['remember_token' => $newtoken, 'email_verified_at' => $date]);
-        // \LogActivity::addToLog('Lien d\'activation valide et compte maintenant activé :: Par '.$user->email );
-        flash('Félicitations! <br> Votre compte est maintenant activé. <br> Vous pouvez à présent vous connecter.')->success()->important();
-        return redirect()->route('login');
 
     }
 

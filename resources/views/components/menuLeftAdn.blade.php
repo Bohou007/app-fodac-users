@@ -25,7 +25,7 @@
                   <ul class="navbar-nav">
                       <li class="nav-item">
                           <a class="nav-link {{ set_active_route('home') }}" href="{{ route('home') }}">
-                              <i class="ni ni-shop icon-active"></i>
+                              <i class="fa fa-home icon-active"></i>
                               <span class="nav-link-text">Tableau de bord</span>
                           </a>
                       </li>
@@ -33,7 +33,7 @@
                           <li class="nav-item">
                               <a class="nav-link {{ set_active_route('admin.allDossiers') }}"
                                   href="{{ route('admin.allDossiers') }}">
-                                  <i class="ni ni-ungroup text-orange"></i>
+                                  <i class="ni ni-books text-orange"></i>
                                   <span class="nav-link-text">Consulter les dossiers</span>
                               </a>
                           </li>
@@ -42,7 +42,7 @@
                           <li class="nav-item">
                               <a class="nav-link {{ set_active_route('assigned-fond.index') }}"
                                   href="{{ route('assigned-fond.index') }}">
-                                  <i class="ni ni-ungroup text-orange"></i>
+                                  <i class="fa fa-folder-open text-orange"></i>
                                   <span class="nav-link-text">Fond Dossiers</span>
                               </a>
                           </li>
@@ -51,7 +51,7 @@
                           <li class="nav-item">
                               <a class="nav-link {{ set_active_route('compte.users.index') }}"
                                   href="{{ route('compte.users.index') }}">
-                                  <i class="ni ni-ui-04 text-info"></i>
+                                  <i class="ni ni-single-02 text-info"></i>
                                   <span class="nav-link-text">Comptes utilisateurs</span>
                               </a>
                           </li>
@@ -75,7 +75,7 @@
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('logout') }}"
                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                              <i class="ni ni-user-run text-default"></i>
+                              <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                               <span class="nav-link-text">Deconnexion</span>
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                   @csrf

@@ -80,10 +80,10 @@
                         </div>
 
                         <div class="form-row">
-                            <label for=""> Capitale Demander</label>
+                            <label for=""> Capitale en fin d'activité </label>
                             <input required type="text" name="capitale_demander"
                                 class="form-control @error('capitale_demander') is-invalid @enderror"
-                                value="{{ old('capitale_demander') }}" placeholder="Entrez le montant demander">
+                                value="{{ old('capitale_demander') }}" placeholder="Entrez le capitale en fin d'activité">
                             @error('capitale_demander')
                                 <span class="invalid-feedback text-left" role="alert">
                                     <strong>{!! $message !!}</strong>
@@ -155,20 +155,10 @@
                                                 <input type="text" id="doc_name0" name="doc[0][doc_name]"
                                                     placeholder="Entrer le nom"
                                                     class="form-control nom @error('doc[0][doc_name]') is-invalid @enderror" />
-                                                @error('doc[0][doc_name]')
-                                                    <span class="invalid-feedback text-left" role="alert">
-                                                        <strong>{!! $message !!}</strong>
-                                                    </span>
-                                                @enderror
                                             </td>
                                             <td style="margin-right: 10px;">
                                                 <input type="file" id="doc_file0" name="doc[0][doc_file]"
                                                     class="form-control montant @error('doc[0][doc_file]') is-invalid @enderror" />
-                                                @error('doc[0][doc_file]')
-                                                    <span class="invalid-feedback text-left" role="alert">
-                                                        <strong>{!! $message !!}</strong>
-                                                    </span>
-                                                @enderror
                                             </td>
                                             <td>
                                                 <button type="button" name="add" id="addDoc"
@@ -193,6 +183,34 @@
 @section('scriptJs')
 
     @include('scripts._jsdemande')
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            var i = 0;
+            $('.addDoc').click(function() {
+                ++i;
+                $('#dynamicTable').append('<tr>' +
+                    '<td>' +
+                    '<input type="text" id="doc_name' + i + '" name="doc[' + i + '][doc_name]" placeholder="Entrer le nom" class="form-control nom @error("doc['+i+'][doc_name]") is-invalid @enderror" />' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type="file" id="doc_file' + i + '" name="doc[' + i + '][doc_file]" class="form-control montant @error("doc['+i+'][doc_file]") is-invalid @enderror" />' +
+                    '</td>' +
+                    '<td><button type="button" class="btn btn-danger btn-sm remove-tr">Supprimer</button></td>' +
+                    '</tr>');
+            });
+
+            //remove input
+            $(document).on('click', '.remove-tr', function() {
+                $(this).parents('tr').remove();
+                $('#result').val('');
+                $('.addDoc').removeAttr('disabled');
+            });
+
+        });
+    </script>
 
     <script src="{{ asset('steps_form/js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('assets/vendor/quill/dist/quill.min.js') }}" defer></script>

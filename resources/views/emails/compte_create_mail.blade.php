@@ -14,6 +14,8 @@
     <title></title>
     <!--[if !mso]><!-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
+
     <!--<![endif]-->
     <style type="text/css">
         body {
@@ -118,6 +120,11 @@
         }
 
     </style>
+
+    @php
+        $heure = date('H');
+        $salutation = $heure > 12 ? 'Bonsoir' : 'Bonjour';
+    @endphp
 </head>
 
 <body class="clean-body" style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #e2eace;">
@@ -182,7 +189,7 @@
                                                 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img
                                                     align="center" alt="" border="0"
                                                     class="center fullwidthOnMobile fixedwidth"
-                                                    src="https://www.apiex-benin.com/wp-content/uploads/2020/02/apiex-logo.png"
+                                                    src="https://fodac-test.praisehimci.org/wp-content/uploads/2021/06/fodac-removebg-preview.png"
                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 180px; display: block;"
                                                     title="" width="180" />
                                                 <!--[if mso]></td></tr></table><![endif]-->
@@ -230,7 +237,7 @@
                                                     <p
                                                         style="font-size: 20px; line-height: 1.2; word-break: break-word; text-align: left; mso-line-height-alt: 31px; margin: 0;">
                                                         <span style="font-size: 26px;"><strong><span
-                                                                    style="">{{ sprintf('Bonjour %s', $user->last_name . ' ' . $user->first_name . ',') }}</span></strong></span>
+                                                                    style="">{{ sprintf($salutation . ' ' . $user->last_name . ' ' . $user->first_name . ',') }}</span></strong></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -242,30 +249,34 @@
                                                     style="font-size: 12px; line-height: 1.5; color: #555555; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px;">
                                                     <p
                                                         style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; mso-line-height-alt: 21px; margin: 0;">
-                                                        Nous venons de remarquer que vous avez créé un nouveau compte.
+                                                        Un compte <strong> {{$user->account_type}} </strong> a été cré a votre nom.
                                                     </p>
                                                     <p
                                                         style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; mso-line-height-alt: 21px; margin: 0;">
                                                         Pour finaliser votre inscription, vous devez activer votre
-                                                        compte. </p>
+                                                        compte. 
+                                                    </p>
+                                                    <br>
                                                     <p
                                                         style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; mso-line-height-alt: 21px; margin: 0;">
                                                         Voici vos identifiants de connexion :
-                                                        <br>Email={{ $user->email }} <br> Mot de
-                                                        passe={{ $password }}. <br> <strong>NB: Modifiez votre mot
-                                                            de passe dès votre prémière connexion.</strong> </p>
-                                                    <p
-                                                        style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; mso-line-height-alt: 21px; margin: 0;">
-                                                        Veuillez utiliser le bouton ci-dessous pour l'activation de
-                                                        votre compte. </p>
+                                                        <br>
+                                                        Email = <strong> {{ $user->email }} </strong> <br> 
+                                                        Mot de passe = <strong> {{ $password }} </strong> <br> 
+                                                    </p>
+                                                    <br>
+                                                    <p style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; mso-line-height-alt: 21px; margin: 0;">
+                                                        <strong>NB: Modifiez votre mot de passe dès votre prémière connexion.</strong> 
+                                                        Veuillez utiliser le bouton ci-dessous pour l'activation de votre compte. 
+                                                    </p>
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
                                             <div align="center" class="button-container"
                                                 style="padding-top:25px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
-                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 25px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('admin.activate', [$user->remember_token]) }}" style="height:46.5pt; width:183.75pt; v-text-anchor:middle;" arcsize="7%" stroke="false" fillcolor="#227a13"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a
-                                                    href="{{ route('admin.activate', [$user->remember_token]) }}"
-                                                    style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #227a13; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #227a13; border-right: 1px solid #227a13; border-bottom: 1px solid #227a13; border-left: 1px solid #227a13; padding-top: 15px; padding-bottom: 15px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
+                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="padding-top: 25px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ route('admin.activate.index', [$user->remember_token]) }}" style="height:46.5pt; width:183.75pt; v-text-anchor:middle;" arcsize="7%" stroke="false" fillcolor="#227a13"><w:anchorlock/><v:textbox inset="0,0,0,0"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a
+                                                    href="{{ route('admin.activate.index', $user->remember_token) }}"
+                                                    style="-webkit-text-size-adjust: none; text-decoration: none; display: inline-block; color: #ffffff; background-color: #3454A1; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width: auto; width: auto; border-top: 1px solid #3454A1; border-right: 1px solid #3454A1; border-bottom: 1px solid #3454A1; border-left: 1px solid #3454A1; padding: 7px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;"
                                                     target="_blank"><span
                                                         style="padding-left:15px;padding-right:15px;font-size:16px;display:inline-block;"><span
                                                             style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">ACTIVER
@@ -292,7 +303,7 @@
                                                     <span style="font-size: 14px;">Merci d'utiliser notre
                                                         application!</span><br><em><strong><span
                                                                 style="font-size: 14px;">Equipe
-                                                                APIEX-BENIN.</span></strong></em></div>
+                                                                FODAC-GUINEE.</span></strong></em></div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
                                             <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 50px; padding-top: 20px; padding-bottom: 10px; font-family: Tahoma, sans-serif"><![endif]-->
@@ -303,8 +314,8 @@
                                                     Si vous avez du mal à cliquer sur le bouton "<strong>Activer
                                                         maintenant</strong>", copiez et collez le lien ci-dessous dans
                                                     votre navigateur web: <a
-                                                        href="{{ route('admin.activate', [$user->remember_token]) }}"
-                                                        style="color: #5e6ebf;"><strong>{{ route('admin.activate', [$user->remember_token]) }}</strong></a>
+                                                        href="{{ route('admin.activate.index', [$user->remember_token]) }}"
+                                                        style="color: #5e6ebf;"><strong>{{ route('admin.activate.index', [$user->remember_token]) }}</strong></a>
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
@@ -345,8 +356,8 @@
                     </div>
                     <div style="background-color:transparent;">
                         <div class="block-grid three-up"
-                            style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #525252;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#525252;">
+                            style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #85562A;">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#85562A;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px"><tr class="layout-full-width" style="background-color:#525252"><![endif]-->
                                 <!--[if (mso)|(IE)]><td align="center" width="200" style="background-color:#525252;width:200px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:0px; padding-bottom:0px;"><![endif]-->
                                 <div class="col num4"
@@ -362,7 +373,7 @@
                                                 valign="top" width="100%">
                                                 <tbody>
                                                     <tr style="vertical-align: top;" valign="top">
-                                                        <td style="word-break: break-word; vertical-align: top; padding-top: 15px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;"
+                                                        <td style="word-break: break-word; vertical-align: top; padding-top: 15px; padding-right: 0px; padding-bottom: 15px; padding-left: 0px;"
                                                             valign="top">
                                                             <table align="center" cellpadding="0" cellspacing="0"
                                                                 class="social_table" role="presentation"
@@ -374,7 +385,7 @@
                                                                         valign="top">
                                                                         <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;"
                                                                             valign="top"><a
-                                                                                href="https://www.facebook.com/apiexbeninofficiel/"
+                                                                                href="https://web.facebook.com/FodacGuinee"
                                                                                 target="_blank"><img
                                                                                     alt="Facebook Apiex" height="32"
                                                                                     src="{{ asset('images/facebook2x.png') }}"
@@ -383,12 +394,12 @@
                                                                         </td>
                                                                         <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;"
                                                                             valign="top"><a
-                                                                                href="https://www.linkedin.com/company/apiex-benin/"
+                                                                                href="https://twitter.com/fodacguinee"
                                                                                 target="_blank"><img
                                                                                     alt="LinkedIn Apiex" height="32"
-                                                                                    src="{{ asset('images/linkedin2x.png') }}"
+                                                                                    src="{{ asset('images/twitter2x.png') }}"
                                                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
-                                                                                    title="LinkedIn" width="32" /></a>
+                                                                                    title="Twitter" width="32" /></a>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -476,12 +487,13 @@
                                             style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
                                             <!--<![endif]-->
                                             <div align="center" class="img-container center fullwidth"
-                                                style="padding-right: 0px;padding-left: 0px;">
-                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]--><img
+                                                style="padding-right: 0px;padding-left: 0px; background-color: #85562A; width: 600px;">
+                                                <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 0px;padding-left: 0px;" align="center"><![endif]-->
+                                                    {{-- <img
                                                     align="center" alt="" border="0" class="center fullwidth"
                                                     src="{{ asset('images/rounder-dwn.png') }}"
                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 600px; display: block;"
-                                                    title="" width="600" />
+                                                    title="" width="600" /> --}}
                                                 <!--[if mso]></td></tr></table><![endif]-->
                                             </div>
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AgentRegisterMail;
 use App\Mail\CompteCreatedMail;
 use App\Models\Permission;
 use App\Models\Role;
@@ -84,8 +85,8 @@ class UserController extends Controller
 
             $role = Role::findOrFail($request->roles);
 
-            // $password = $this->genererChaine(10);
-            $password = 'Secret@123449#';
+            $password = $this->genererChaine(10);
+            // $password = 'Secret@123449#';
             $user = User::create([
                 'last_name' => request('nom'),
                 'first_name' => request('prenom'),
@@ -100,11 +101,11 @@ class UserController extends Controller
             if ($user) {
                 // \LogActivity::addToLog('Ajout d\'un nouvel utilisateur');
                 $this->syncPermissions($request, $user);
-                // Mail::to($user->email)->send(new CompteCreatedMail ($user, $password));
+                Mail::to($user->email)->send(new AgentRegisterMail ($user, $password));
             }
         flashy()->success('Utilisateur créé avec succès!');
 
-            return redirect()->route('admin.register');
+            return redirect()->route('compte.users.index');
         }else {
             // \LogActivity::addToLog('Erreur lours de l\'ajout d\'un nouvel utilisateur');
         flashy()->error('Impossible de créer ce compte!');
@@ -130,11 +131,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        if (Auth::user()->account_type == 'ADMIN') {
-            // $roles = Role::where('name', '!=', 'Super Admin')->get();
-            $roles = Role::get();
+        if($request->is('admin/*')) {
+            $roles = Role::where('name', '!=', 'Super Admin')->get();
+            // $roles = Role::get();
             $user=User::where('id',$id)->firstOrFail();
             $permissions = Permission::all('name', 'id');
             return view('admin.compte_users.edit', compact('user', 'roles', 'permissions'));
@@ -177,8 +178,8 @@ class UserController extends Controller
             }
 
             // // \LogActivity::addToLog('Modification du rôle de '.$user->nom.' '.$user->prenom);
-            flashy()->success('Le compte de '.$user->nom.' '.$user->prenom.' a été modifié avec succès! Son nouveau rôle est '.$user_role.'.');
-            return redirect()->route('users.index');
+            flashy()->success('Le compte de '.$user->last_name.' '.$user->first_name.' a été modifié avec succès! Son nouveau rôle est '.$user_role.'.');
+            return redirect()->route('compte.users.index');
         }else {
             flashy()->danger('Impossible de modifier ce compte!');
             return back();
@@ -193,7 +194,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        flashy()->success('L\'tilisateur '.$user->last_name.' '.$user->first_name.' a été Suprimer avec succès! ');
+        return back();
+
     }
 
 

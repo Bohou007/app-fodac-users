@@ -12,8 +12,8 @@
                         <input class="form-control" placeholder="Search" type="text">
                     </div>
                 </div>
-                <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
-                    aria-label="Close">
+                <button type="button" class="close" data-action="search-close"
+                    data-target="#navbar-search-main" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </form>
@@ -55,13 +55,15 @@
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <!-- Avatar -->
-                                            @if($notification->type == 'Information')
-                                                <img alt="Image placeholder" src="{{ asset('images/icon-cloche-3.png') }}"
-                                                class="avatar rounded-circle">
+                                            @if ($notification->type == 'Information')
+                                                <img alt="Image placeholder"
+                                                    src="{{ asset('images/icon-cloche-3.png') }}"
+                                                    class="avatar rounded-circle">
                                             @else
-                                                <img alt="Image placeholder" src="{{ asset('images/icon-enveloppe-2.png') }}"
-                                                class="avatar rounded-circle">
-                                            @endif    
+                                                <img alt="Image placeholder"
+                                                    src="{{ asset('images/icon-enveloppe-2.png') }}"
+                                                    class="avatar rounded-circle">
+                                            @endif
                                         </div>
                                         <div class="col ml--2">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -72,7 +74,8 @@
                                                     <small>{{ $notification->created_at->diffForHumans() }}</small>
                                                 </div>
                                             </div>
-                                            <p class="text-sm mb-0">{{ Str::limit($notification->description, 39, '...') }}</p>
+                                            <p class="text-sm mb-0">
+                                                {{ Str::limit($notification->description, 39, '...') }}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -90,7 +93,8 @@
                                                     <h4 class="mb-0 text-sm">Pas de notification</h4>
                                                 </div>
                                             </div>
-                                            <p class="text-sm mb-0">Desolez, vous n'avez pas de notification pour l'instant</p>
+                                            <p class="text-sm mb-0">Desolez, vous n'avez pas de notification pour
+                                                l'instant</p>
                                         </div>
 
                                     </div>
@@ -169,25 +173,34 @@
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Bienvenue!</h6>
                         </div>
-                        <a href="{{ route('profile.index') }}" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>Mon profile</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
+                        @if (Auth::user()->account_type != 'OC')
+                            <a href="{{ route('admin.profile') }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mon profile</span>
+                            </a>
+                        @else
+                            <a href="{{ route('profile.index') }}" class="dropdown-item">
+                                <i class="ni ni-single-02"></i>
+                                <span>Mon profile</span>
+                            </a>
+                        @endif
+
+                        {{-- <a href="#!" class="dropdown-item">
                             <i class="ni ni-calendar-grid-58"></i>
                             <span>Activités</span>
-                        </a>
-                        <a href="{{ route('supports') }}" class="dropdown-item">
+                        </a> --}}
+                        {{-- <a href="{{ route('supports') }}" class="dropdown-item">
                             <i class="ni ni-support-16"></i>
                             <span>Support</span>
-                        </a>
+                        </a> --}}
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                             class="dropdown-item">
-                            <i class="ni ni-user-run"></i>
+                            <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                             <span>Deconnexion</span>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                class="d-none">
                                 @csrf
                             </form>
                         </a>

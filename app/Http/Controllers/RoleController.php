@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 
 use function App\Helpers\slugify;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -42,7 +43,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // if ($request->is('adn/*')) {
+        if ($request->is('admin/*')) {
             $this->validate($request, [
                 'display_name' => 'required|unique:roles|min:2|max:191',
                 'permissions' => [
@@ -65,12 +66,12 @@ class RoleController extends Controller
                 // \LogActivity::addToLog('créaction du nouveau rôle '.$role->display_name);
 
                 $role->syncPermissions($request->permissions);
-                flash('Rôle <strong>'.$role->display_name.'</strong> ajouté.')->success()->important();
+                flashy()->success('Rôle <strong>'.$role->display_name.'</strong> ajouté.');
             }
             return redirect()->route('admin.roles');
-        // } else {
-        //    return back();
-        // }
+        } else {
+           return back();
+        }
     }
 
     /**
@@ -81,7 +82,9 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        $permissions = Permission::all();
+        return view('admin.roles.show', compact('role', 'permissions'));
+
     }
 
     /**
@@ -92,7 +95,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+
+        $permissions = Permission::all();
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -102,9 +107,37 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'display_name' => 'required|min:2|max:191|unique:roles,display_name,'.$id,
+        ],[
+            'display_name.required' => 'Vous n\'avez pas nommé le rôle',
+            'display_name.unique' => 'Un rôle a déjà été créé avec ce nom',
+            'display_name.min' => 'Le nom du rôle doit faire minimum :min caractères',
+            'display_name.max' => 'Le nom du rôle doit faire maximum :max caractères',
+        ]);
+
+        if($role = Role::findOrFail($id)) {
+            if($role->name === 'Super Admin') {
+                $role->syncPermissions(Permission::all());
+                // \LogActivity::addToLog('Modification du rôle '.$role->display_name);
+                flashy()->success('Modification du rôle '.$role->display_name);
+                return redirect()->route('admin.roles');
+            } else {
+                $role->name = $request->display_name;
+                $role->display_name = Str::slug($request->display_name, $separator = '_');
+                $role->save();
+
+                $role->syncPermissions($request->permissions);
+                // \LogActivity::addToLog('Modification du rôle '.$role->display_name);
+                flashy()->success( $role->display_name . ' modifié.');
+            }
+        } else {
+            // \LogActivity::addToLog('Erreur lors de la modification du rôle '.$role->display_name);
+            flashy()->success('Le rôle avec l\'identifiant '.$id.' n\'a pas été trouvé.');
+        }
+        return redirect()->route('admin.roles');
     }
 
     /**

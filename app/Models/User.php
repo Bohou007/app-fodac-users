@@ -36,6 +36,8 @@ class User extends Authenticatable
         'regist_corporate',
         'address_corporate',
         'terms_conditions',
+        'remember_token',
+        'email_verified_at'
     ];
 
     public function piece_jointes()

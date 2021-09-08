@@ -9,35 +9,35 @@
                 <div class="d">
                     <ul class="nav nav-tabs nav-fill nav-justified">
                         <li class="nav-item">
-                            <a class="nav-link active" style="font-size:14px" data-toggle="tab" id="pills-home-tab"
+                            <a class="nav-link active text-left" style="font-size:14px" data-toggle="tab" id="pills-home-tab"
                                 href="#home" role="tab" aria-controls="pills-home" aria-selected="true">
                                 Dossiers soumis
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" style="font-size:14px" data-toggle="tab" id="pills-home-tab" href="#menu1"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 Dossiers en cours
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a class="nav-link" style="font-size:14px" data-toggle="tab" id="pills-home-tab" href="#menu2"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 Dossiers en attentes
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a class="nav-link" style="font-size:14px" data-toggle="tab" id="pills-home-tab" href="#menu3"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 Dossiers validés
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a class="nav-link" style="font-size:14px" data-toggle="tab" id="pills-home-tab" href="#menu4"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
                                 Dossiers echoués
                             </a>
-                        </li>
+                        </li> --}}
 
                     </ul>
 
@@ -54,7 +54,7 @@
                                 </a>
                             </div>
                             <div class="table-responsive py-4">
-                                <table class="table table-flush" id="">
+                                <table class="table table-flush" id="datatable-buttons">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">#</th>
@@ -76,23 +76,54 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @forelse ( $dossiers->where('status', 0)->reverse() as $index => $dossier )
+                                        @forelse ( $dossiers->reverse() as $index => $dossier )
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $dossier->name }}</td>
                                                 <td>{{ $dossier->budget_oc }} FCFA</td>
                                                 <td>
-                                                    <span class="badge badge-default">
-                                                        @if ($dossier->status == 0)
+                                                    @if ($dossier->status == 0)
+                                                        <span class="badge badge-default">
                                                             <span class="status">
                                                                 Pas en traitement
                                                             </span>
-                                                        @endif
-                                                    </span>
+                                                        </span>
+                                                    @endif
+                                                    @if ($dossier->status == 1)
+                                                        <span class="badge badge-primarys">
+                                                            <span class="status">
+                                                                En cours de traitement
+                                                            </span>
+                                                        </span>
+                                                    @endif
+                                                    @if ($dossier->status == 2)
+                                                        <span class="badge badge-warnings">
+                                                            <i class="fa fa-exclamation-triangle " aria-hidden="true"></i>
+                                                            <span class="status">
+                                                                En attente de complement
+                                                            </span>
+                                                        </span>
+                                                    @endif
+                                                    @if ($dossier->status == 3)
+                                                        <span class="badge badge-successe">
+                                                            <span class="status">
+                                                                Dossier validé
+                                                            </span>
+                                                        </span>
+                                                    @endif
+                                                    @if ($dossier->status == 4)
+                                                        <span class="badge badge-dangers">
+                                                            <span class="status">
+                                                                Dossier non retenu
+                                                            </span>
+                                                        </span>
+                                                    @endif
+
                                                 </td>
                                                 <td>{{ $dossier->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('dossiers.show', $dossier->id) }}" class="btn btn-fodac-1 btn-sm">
+                                                    <a href="{{ route('dossiers.show', $dossier->id) }}"
+                                                        class="btn btn-fodac-1 btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     <a href="" class="btn btn-dangers btn-sm">
@@ -158,7 +189,8 @@
                                                 </td>
                                                 <td>{{ $dossier->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('dossiers.show', $dossier->id) }}" class="btn btn-fodac-1 btn-sm">
+                                                    <a href="{{ route('dossiers.show', $dossier->id) }}"
+                                                        class="btn btn-fodac-1 btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </td>
@@ -220,10 +252,12 @@
                                                 </td>
                                                 <td>{{ $dossier->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('dossiers.show', $dossier->id) }}" class="btn btn-fodac-1 btn-sm">
+                                                    <a href="{{ route('dossiers.show', $dossier->id) }}"
+                                                        class="btn btn-fodac-1 btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('document-complementaires.create') }}" class="btn btn-fodac-2 btn-sm">
+                                                    <a href="{{ route('document-complementaires.create') }}"
+                                                        class="btn btn-fodac-2 btn-sm">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </td>
@@ -231,9 +265,9 @@
 
                                         @empty
 
-                         d                   <tr class="text-center">
+                                            d <tr class="text-center">
                                                 <td colspan="6">
-                                                    <h3>----  Pas de dossier en attente  ----</h3>
+                                                    <h3>---- Pas de dossier en attente ----</h3>
                                                 </td>
                                             </tr>
 
@@ -284,7 +318,8 @@
                                                 </td>
                                                 <td>{{ $dossier->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('dossiers.show', $dossier->id) }}" class="btn btn-fodac-1 btn-sm">
+                                                    <a href="{{ route('dossiers.show', $dossier->id) }}"
+                                                        class="btn btn-fodac-1 btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </td>
@@ -345,7 +380,8 @@
                                                 </td>
                                                 <td>{{ $dossier->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('dossiers.show', $dossier->id) }}" class="btn btn-fodac-1 btn-sm">
+                                                    <a href="{{ route('dossiers.show', $dossier->id) }}"
+                                                        class="btn btn-fodac-1 btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </td>

@@ -43,16 +43,21 @@ class ObservationController extends Controller
         $dossier->status = $request->decision;
         $dossier->save();
 
-        $notify = new Notifications();
 
-        $result = getResult($dossier->id);
-            $notify->name = 'Votre dossier'. $dossier->name . $result;
+
+        if ($dossier->status == 3) {
+            $notify = new Notifications();
+            $result = getResult($dossier->status);
+
+            $notify->name = 'Le dossier'. $dossier->name . $result;
             $notify->type = 'Information';
-            $notify->description = $request->content;
+            $notify->description = 'Cher Agent du staff, un nouveau dossier vient d\'etre validé. Merci de l\'approuver.';
             $notify->status = 0;
-            $notify->user_id = $dossier->user->id;
-            $notify->group = Auth::user()->account_type;
+            $notify->user_id = Auth::user()->id;
+            $notify->group = 'Staff';
             $notify->save();
+        }
+
 
         $observation = new Observation();
         $observation->decision = $dossier->status;
@@ -104,16 +109,18 @@ class ObservationController extends Controller
             $dossier->status = $request->decision;
             $dossier->save();
 
-            $notify = new Notifications();
+            if ($dossier->status == 3) {
+                $notify = new Notifications();
+                $result = getResult($dossier->status);
 
-            $result = getResult($dossier->id);
-            $notify->name = 'Votre dossier'. $dossier->name . $result;
-            $notify->type = 'Information';
-            $notify->description = $request->content;
-            $notify->status = 0;
-            $notify->user_id = $dossier->user->id;
-            $notify->group = Auth::user()->account_type;
-            $notify->save();
+                $notify->name = 'Le dossier'. $dossier->name . $result;
+                $notify->type = 'Information';
+                $notify->description = 'Cher Agent du staff, un nouveau dossier vient d\'etre validé. Merci de l\'approuver.';
+                $notify->status = 0;
+                $notify->user_id = Auth::user()->id;
+                $notify->group = 'Staff';
+                $notify->save();
+            }
 
             $observation = Observation::findOrFail($id);
             $observation->decision = $dossier->status;

@@ -114,7 +114,7 @@
                 <div class="card-body">
                     <!-- List group -->
                     <ul class="list-group list-group-flush list my--3">
-                        @forelse($dossier->take(4)->reverse() as $index => $alldossier)
+                        @forelse($dossier->where('status', '!=', 3)->take(4)->reverse() as $index => $alldossier)
                             <li class="list-group-item px-0">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
@@ -185,41 +185,60 @@
                 <!-- Card header -->
                 <div class="card-header">
                     <!-- Title -->
-                    <h5 class="h3 mb-0">Vos derniers messages</h5>
+                    <h5 class="h3 mb-0">Vos derniers dossiers validés</h5>
                 </div>
                 <!-- Card body -->
-                <div class="card-body p-0">
+                <div class="card-body">
                     <!-- List group -->
-                    <div class="list-group list-group-flush">
-                        @forelse($supports->take(2)->reverse() as $index => $support)
-
-                            <a href="#"
-                                class="list-group-item list-group-item-action flex-column align-items-start py-4 px-4">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <div>
-                                        <div class="d-flex w-100 align-items-center">
-                                            <img src="{{ asset('images/user.png') }}" alt="Image placeholder"
-                                                class="avatar avatar-xs mr-2">
-                                            <h5 class="mb-1">Admin</h5>
-                                        </div>
+                    <ul class="list-group list-group-flush list my--3">
+                        @forelse($dossier->where('status', 3)->take(4)->reverse() as $index => $alldossier)
+                            <li class="list-group-item px-0">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#" class="avatar rounded-circle">
+                                            <img alt="Image placeholder" src="{{ asset('images/icon-dossier-3.png') }}">
+                                        </a>
                                     </div>
-                                    <small>{{ $support->created_at->diffForHumans() }}</small>
+                                    <div class="col ml--1">
+                                        <h4 class="mb-0">
+                                            <a href="#!">{{ $alldossier->name }}</a>
+                                        </h4>
+                                        <span class="text-success">●</span>
+
+
+                                            @if ($alldossier->status == 3)
+                                                <i class="bg-warning"></i>
+                                                <span class="status">
+                                                    Dossier validé
+                                                </span>
+                                            @else
+                                                <i class="bg-warning"></i>
+                                                <span class="status">
+                                                    Dossier échoué
+                                                </span>
+                                            @endif
+                                        </small>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{ route('dossiers.show', $alldossier->id) }}"
+                                            class="btn btn-sm btn-fodac-1">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <h4 class="mt-3 mb-1"> {{ $support->objet }}</h4>
-                                <p class="text-sm mb-0">
-                                    {{ Str::limit($support->message, 100, '...') }}
-                                </p>
-                            </a>
-
-
+                            </li>
                         @empty
-                            <a href="#"
-                                class="list-group-item list-group-item-action flex-column align-items-start py-4 px-4">
-                                <h4 class="mt-3 mb-1"> Pas de message</h4>
-                            </a>
+
+                            <li class="list-group-item px-0">
+                                <div class="row align-items-center">
+                                    Pas de dossier validé
+                                </div>
+                            </li>
+
                         @endforelse
 
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -257,7 +276,8 @@
                                                     class="fas fa-clock mr-1"></i>{{ $notification->created_at->diffForHumans() }}</small>
                                         </div>
                                     </div>
-                                    <h6 class="text-sm mt-1 mb-0">{{ Str::limit($notification->description, 35, '...') }}
+                                    <h6 class="text-sm mt-1 mb-0">
+                                        {{ Str::limit($notification->description, 35, '...') }}
                                     </h6>
                                 </div>
                             </div>

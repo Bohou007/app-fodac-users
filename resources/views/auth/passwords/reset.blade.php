@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CelestialUI Admin</title>
+    <title>Réinitialisation de mot de passe - Fodac </title>
     <!-- base:css -->
     <link rel="stylesheet" href="{{ asset('css/auth/typeicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/vendor.css')}}">
@@ -31,9 +31,8 @@
                             </div>
                             <h4>{{ __('Réinitialiser le mot de passe') }}</h4>
                             <h6 class="font-weight-light"Réinitialiser votre mot de passe</h6>
-                            <form class="pt-3" method="POST" action="action="{{ route('password.update') }}">
+                            <form class="pt-3" method="POST" action="action="{{ route('password.reset') }}">
                                 @csrf
-                        <input type="hidden" name="token" value="{{ $token }}">
 
                                 <div class="form-group">
                                     <input id="email" type="email"

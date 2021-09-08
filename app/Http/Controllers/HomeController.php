@@ -38,15 +38,22 @@ class HomeController extends Controller
                 // flashy()->info('Bienvenue '. Auth::user()->last_name.' '. Auth::user()->first_name. '. Nous sommes heureux de vous revoir !' );
                 $dossier = Dossiers::where('user_id', Auth::user()->id)->get();
                 $supports = Supports::where('user_id', Auth::user()->id)->get();
-                $notifications = Notifications::where('user_id', Auth::user()->id)->get();
+                $notifications = Notifications::where('user_id', Auth::user()->id)->where('group','!=', 'Consultant')->get();
                 return view('users.home', compact('dossier', 'supports', 'notifications'));
             }
         }else {
             // flashy()->info('Bienvenue '. Auth::user()->last_name.' '. Auth::user()->first_name. '. Nous sommes heureux de vous revoir !' );
-            $dossier = Dossiers::all();
-            $supports = Supports::all();
-            $notifications = Notifications::where('user_id', Auth::user()->id)->get();
-            return view('admin.home', compact('dossier', 'supports', 'notifications'));
+            if (Auth::user()->email_verified_at == null) {
+                $token = Auth::user()->remember_token;
+                return view('auth.newPassword', compact('token'));
+            } else {
+                $dossier = Dossiers::all();
+                $supports = Supports::all();
+                $notifications = Notifications::where('group', Auth::user()->account_type)->get();
+                return view('admin.home', compact('dossier', 'supports', 'notifications'));
+            }
+            
+            
         }
     }
 }

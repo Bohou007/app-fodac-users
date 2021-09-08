@@ -39,7 +39,7 @@
                         <li class="nav-item">
                             <a class="nav-link" style="font-size:14px" data-toggle="tab" id="pills-home-tab" href="#menu4"
                                 role="tab" aria-controls="pills-home" aria-selected="true">
-                                Dossiers echoués
+                                Dossiers non retenus
                             </a>
                         </li>
 

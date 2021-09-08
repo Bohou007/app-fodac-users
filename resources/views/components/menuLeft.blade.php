@@ -3,7 +3,7 @@
       <div class="scrollbar-inner">
           <!-- Brand -->
           <div class="sidenav-header d-flex align-items-center">
-              <a class="navbar-brand" href="../../pages/dashboards/dashboard.html">
+              <a class="navbar-brand" {{ set_active_route('home') }}" href="{{ route('home') }}">
                   <img src="{{ asset('images/fodac-logo.png') }}" class="navbar-brand-img" alt="...">
               </a>
               <div class="ml-auto">
@@ -25,13 +25,13 @@
                   <ul class="navbar-nav">
                       <li class="nav-item">
                           <a class="nav-link {{ set_active_route('home') }}" href="{{ route('home') }}">
-                              <i class="ni ni-shop icon-active"></i>
+                              <i class="fa fa-home icon-active"></i>
                               <span class="nav-link-text">Tableau de bord</span>
                           </a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link {{ set_active_route('dossiers.index') }}" href="{{ route('dossiers.index') }}">
-                              <i class="ni ni-ungroup text-orange"></i>
+                              <i class="ni ni-books text-orange"></i>
                               <span class="nav-link-text">Consulter ses dossiers</span>
                           </a>
                       </li>
@@ -53,15 +53,15 @@
                               <span class="nav-link-text">Notifications</span>
                           </a>
                       </li> --}}
-                      <li class="nav-item">
+                      {{-- <li class="nav-item">
                           <a class="nav-link {{ set_active_route('supports') }}" href="{{ route('supports') }}">
                               <i class="ni ni-support-16 text-default"></i>
                               <span class="nav-link-text">Supports</span>
                           </a>
-                      </li>
+                      </li> --}}
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                              <i class="ni ni-user-run text-default"></i>
+                              <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                               <span class="nav-link-text">Deconnexion</span>
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf

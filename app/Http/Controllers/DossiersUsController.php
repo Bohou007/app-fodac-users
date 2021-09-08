@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dossiers;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\PieceJointe;
@@ -71,6 +72,14 @@ class DossiersUsController extends Controller
             $dossier->user_id =Auth::user()->id;
             $dossier->save();
 
+            $notify = new Notifications();
+            $notify->name = 'Nouveau dossier';
+            $notify->type = 'Information';
+            $notify->description = 'Cher Consultant un nouveau dossier vient d\'être soumis. Merci de le traiter.';
+            $notify->status = 0;
+            $notify->user_id = $dossier->user->id;
+            $notify->group = 'Consultant';
+            $notify->save();
 
             if ($request->doc != []){
                 $pj= [];

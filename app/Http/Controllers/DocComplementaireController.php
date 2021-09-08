@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dossiers;
+use App\Models\Notifications;
 use App\Models\PieceJointe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,15 @@ class DocComplementaireController extends Controller
 
                 $dossier = Dossiers::findOrFail($request->dossier_id);
                 $dossier->pieceJointe()->attach($pj->id);
+
+                $notify = new Notifications();
+                $notify->name = 'Complement de dossier.';
+                $notify->type = 'Information';
+                $notify->description = 'Cher Consultant, '. Auth::user()->first_name . ' ' . Auth::user()->first_name .' vient d\'ajouter un complement à son dossier '. $dossier->name  . '. Merci de le traiter.';
+                $notify->status = 0;
+                $notify->user_id = Auth::user()->id;
+                $notify->group = 'Consultant';
+                $notify->save();
 
                 flashy()->success('Votre document complementaire a été enregistrer avec success.');
 

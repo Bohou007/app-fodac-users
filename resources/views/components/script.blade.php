@@ -11,48 +11,56 @@
 <script>
     $(document).ready(function() {
 
-        $("#profils option:selected").change(function() {
-            // let select = document.getElementById("profils");
+    $("#profils option:selected").change(function() {
+        // let select = document.getElementById("profils");
+        $("#getCorporate").hide();
+
+        var select = $(this).val();
+
+        let choice = select.selectedIndex // Récupération de l'index du <option> choisi
+
+        let valeur_cherchee = select.options[choice].value;
+
+        if (valeur_cherchee == 1) {
+            $("#getCorporate").show();
+        } else {
             $("#getCorporate").hide();
-
-            var select = $(this).val();
-
-            let choice = select.selectedIndex // Récupération de l'index du <option> choisi
-
-            let valeur_cherchee = select.options[choice].value;
-
-            if (valeur_cherchee == 1) {
-                $("#getCorporate").show();
-            } else {
-                $("#getCorporate").hide();
-            }
-        });
+        }
+    });
     });
 
 
 
     })
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#datatable-buttons_filter').toText("helloworld");
+    });
+</script>
 <script>
     //au clic du bouton enregistrer
-    $("#envoyer").click(function() {
-        $('#envoyer').html('<i class="fa fa-spin spiner"></i>Envoi en cours...');
-    });
-    $("#enregistrer").click(function() {
-        $('#enregistrer').html('<i class="fa fa-spin spiner"></i>Enregistrement...');
-    });
-    $("#supprimer").click(function() {
-        $('#supprimer').html('<i class="fa fa-spin spiner"></i>Suppression...');
-    });
+    $(document).ready(function() {
+            $("#envoyer").click(function() {
+                $('#envoyer').html('<i class="fa fa-spin spiner"></i>Envoi en cours...');
+            });
+            $("#enregistrer").click(function() {
+                $('#enregistrer').html('<i class="fa fa-spin spiner"></i>Enregistrement...');
+            });
+            $("#supprimer").click(function() {
+                $('#supprimer').html('<i class="fa fa-spin spiner"></i>Suppression...');
+            });
 
-    // Au clic bouton valider demande
-    $(document).on('click', '.valider', function() {
-        $(this).html('<span class="mx-3"><i class="fas fa-circle-notch fa-spin fa-2x"></i></span>');
-    });
+            // Au clic bouton valider demande
+            $(document).on('click', '.valider', function() {
+                $(this).html('<span class="mx-3"><i class="fas fa-circle-notch fa-spin fa-2x"></i></span>');
+            });
+        )
+    };
 </script>
 <!-- Etape2 --- actionnaire-->
 <script type="text/javascript">
-
     $(document).ready(function() {
 
         var i = 0;
@@ -60,20 +68,12 @@
             ++i;
             $('#dynamicTable').append('<tr>' +
                 '<td>' +
-                '<input type="text" id="doc_name' + i + '" name="doc[' + i + '][doc_name]" placeholder="Entrer le nom" class="form-control nom @error("doc['+i+'][doc_name]") is-invalid @enderror" />' +
-                '@error("doc['+i+'][doc_name]")' +
-                    '<span class="invalid-feedback" role="alert">' +
-                        '<strong>{!! $message !!}</strong>'+
-                        '</span>'+
-                '@enderror' +
+                '<input type="text" id="doc_name' + i + '" name="doc[' + i +
+                '][doc_name]" placeholder="Entrer le nom" class="form-control nom @error("doc['+i+'][doc_name]") is-invalid @enderror" />' +
                 '</td>' +
                 '<td>' +
-                '<input type="file" id="doc_file' + i + '" name="doc[' + i + '][doc_file]" placeholder="Enter le montant" class="form-control montant @error("doc['+i+'][doc_file]") is-invalid @enderror" />' +
-                '@error("doc['+i+'][doc_file]")'+
-                    '<span class="invalid-feedback" role="alert">'+
-                        '<strong>{!! $message !!}</strong>'+
-                        '</span>'+
-                '@enderror' +
+                '<input type="file" id="doc_file' + i + '" name="doc[' + i +
+                '][doc_file]" class="form-control montant @error("doc['+i+'][doc_file]") is-invalid @enderror" />' +
                 '</td>' +
                 '<td><button type="button" class="btn btn-danger btn-sm remove-tr">Supprimer</button></td>' +
                 '</tr>');

@@ -24,6 +24,9 @@ Route::get('/', function () {
 // });
 
 Auth::routes();
+Route::get('/inscription/{token}/activation', 'ActivateCompteAdminController@index')->name('admin.activate.index');
+Route::post('/inscription/{token}/activation-and-new-password', 'ActivateCompteAdminController@passwordUpdate')->name('admin.activate.passwordUpdate');
+
 
 Route::group([
     'middleware' => 'App\Http\Middleware\Auth',
@@ -63,8 +66,7 @@ function () {
                 /* Admin register */
                     Route::get('/inscription', 'UserController@create')->name('admin.register');
                     Route::post('/inscrire', 'UserController@store')->name('admin.registered');
-                    Route::get('/inscription/{token}/activation', 'Auth\VerificationController@activate')->name('admin.activate');
-                    Route::get('/activation/{token}/refresh', 'Auth\VerificationController@refreshActivationLink')->name('admin.refresh.activation');
+                    // Route::get('/activation/{token}/refresh', 'Auth\VerificationController@refreshActivationLink')->name('admin.refresh.activation');
 
                 /* Admin register */
 
@@ -74,9 +76,9 @@ function () {
                     Route::get('/', 'UserController@index')->name('compte.users.index');
                     Route::get('/utilisateur/{token}', 'UserController@show')->name('compte.users.show')->middleware(['permission:voir utilisateur']);
                     Route::get('/utilisateur/{token}/edit', 'UserController@edit')->name('compte.users.edit');
-                    Route::post('/utilisateur/{user}/update', 'UserController@update')->name('compte.users.update');
+                    Route::put('/utilisateur/{user}/update', 'UserController@update')->name('compte.users.update');
                     Route::get('/utilisateurs/desactives', 'UserController@trasheds')->name('compte.users.trasheds')->middleware(['permission:voir utilisateur']);
-                    Route::get('/utilisateur/{token}/supprimer', 'UserController@destroy')->name('compte.users.delete')->middleware(['permission:supprimer utilisateur']);
+                    Route::delete('/utilisateur/{token}/supprimer', 'UserController@destroy')->name('compte.users.delete')->middleware(['permission:supprimer utilisateur']);
                     Route::get('/utilisateur/{token}/desactive', 'UserController@trashed')->name('compte.users.trashed')->middleware(['permission:voir utilisateur']);
                     Route::get('/utilisateur/{token}/reactiver', 'UserController@restore')->name('compte.users.restore')->middleware(['permission:supprimer utilisateur']);
                 /* Utilisateurs */
@@ -86,7 +88,8 @@ function () {
                 /* Comptes Admin */
                     Route::get('/compte/accueil', 'CompteController@index')->name('admin.home');
                     Route::get('/compte/profil', 'CompteController@show')->name('admin.profile');
-                    Route::post('/compte/{id}/modifier-profil', 'CompteController@profileUpdate')->name('admin.profile.update');
+                    Route::get('/compte/profil/{id}/modifier-profil', 'CompteController@edit')->name('admin.profile.edit');
+                    Route::put('/compte/{id}/modifier-profil', 'CompteController@profileUpdate')->name('admin.profile.update');
                     Route::post('/compte/modifier-mot-passe', 'CompteController@passwordUpdate')->name('admin.password.update');
                     Route::get('/deconnexion', 'CompteController@logout')->name('admin.logout');
                 /* Comptes Admin */
@@ -112,10 +115,11 @@ function () {
 
 
                     Route::get('/traite-dossier/test/{id}', 'DossiersController@traiteDossierShow')->name('admin.traiteDossieerShow')->middleware(['permission:traiter_dossiers']);
-                    Route::get('/compte/profil', 'CompteController@show')->name('admin.profile');
-                    Route::post('/compte/{id}/modifier-profil', 'CompteController@profileUpdate')->name('admin.profile.update');
-                    Route::post('/compte/modifier-mot-passe', 'CompteController@passwordUpdate')->name('admin.password.update');
-                    Route::get('/deconnexion', 'CompteController@logout')->name('admin.logout');
+
+                    // Route::get('/compte/profil', 'CompteController@show')->name('admin.profile');
+                    // Route::post('/compte/{id}/modifier-profil', 'CompteController@profileUpdate')->name('admin.profile.update');
+                    // Route::post('/compte/modifier-mot-passe', 'CompteController@passwordUpdate')->name('admin.password.update');
+                    // Route::get('/deconnexion', 'CompteController@logout')->name('admin.logout');
                 /* Comptes Admin */
             });
 
