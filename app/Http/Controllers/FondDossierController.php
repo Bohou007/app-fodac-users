@@ -20,13 +20,17 @@ class FondDossierController extends Controller
         $dossiers = Dossiers::where('status', 3)->get();
         return view('admin.dossiers.fondDossier', compact('dossiers'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
+    {
+        //
+    }
+
+    public function createTest()
     {
         //
     }
